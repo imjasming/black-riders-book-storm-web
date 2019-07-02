@@ -1,13 +1,18 @@
 'use strict'
+
 const path = require('path')
 const utils = require('./utils')
 const config = require('../config')
 const vueLoaderConfig = require('./vue-loader.conf')
 
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+// 竟然得手动导入
+// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+const VueLoaderPlugin = require('vue-loader/lib/plugin')
+
 function resolve (dir) {
   return path.join(__dirname, '..', dir)
 }
-
 
 
 module.exports = {
@@ -29,8 +34,15 @@ module.exports = {
       '@': resolve('src'),
     }
   },
+  //!!!!!!!!!!!!!!!!!!!!!
+  // 在这里用
+  //!!!!!!!!!!!!!!!!!!!!!
+  plugins: [
+    new VueLoaderPlugin(),
+  ],
   module: {
     rules: [
+      //...(config.dev.useEslint ? [createLintingRule()] : []),
       {
         test: /\.vue$/,
         loader: 'vue-loader',
