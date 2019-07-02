@@ -29,7 +29,7 @@
 </template>
 
 <script>
-  import ShopHeader from '@/components/header/ShopHeader';
+  import ShopHeader from '@/views/header/ShopHeader';
   import store from '@/vuex/store';
   import {mapGetters, mapActions} from 'vuex';
 

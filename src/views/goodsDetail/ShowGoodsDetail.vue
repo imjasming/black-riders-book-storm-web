@@ -94,7 +94,7 @@
 </template>
 
 <script>
-import ShowProductWarranty from '@/components/goodsDetail/ShowProductWarranty';
+import ShowProductWarranty from '@/views/goodsDetail/ShowProductWarranty';
 import store from '@/vuex/store';
 import { mapState } from 'vuex';
 export default {

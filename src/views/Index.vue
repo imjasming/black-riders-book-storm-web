@@ -124,8 +124,8 @@
 </template>
 
 <script>
-  import Search from '@/components/Search';
-  import HomeNav from '@/components/nav/HomeNav';
+  import Search from '@/views/Search';
+  import HomeNav from '@/views/nav/HomeNav';
   import store from '@/vuex/store';
   import {mapState, mapActions, mapGetters, mapMutations} from 'vuex';
 
