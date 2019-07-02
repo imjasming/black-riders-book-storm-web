@@ -1,12 +1,13 @@
 {
   "name": "black-riders-book-storm",
-  "version": "1.0.0",
-  "description": "A Vue.js project",
+  "version": "0.0.1",
+  "description": "STORM",
   "author": "Xiaoming <1361372700@qq.com>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
     "start": "npm run dev",
+    "test": "npm run unit",
     "build": "node build/build.js"
   },
   "dependencies": {
