@@ -1,9 +1,8 @@
 import axios from 'axios'
 import store from '../store'
 import {getToken} from '@/utils/auth'
-import {Message, MessageBox} from 'element-ui'
 
-export const serverUrl = 'http://127.0.0.1:8082'
+export const serverUrl = 'http://127.0.0.1:8080'
 
 axios.default.timeout = 16000
 axios.defaults.headers.post['Content-Type'] = 'application/json'
@@ -30,7 +29,7 @@ axios.interceptors.request.use(config => {
   return config
 }, error => {
   console.log(error)
-  Message({
+  this.$Message({
     message: error.message,
     type: 'error',
     duration: 8 * 1000
@@ -50,7 +49,7 @@ axios.interceptors.response.use(
       console.log(code + ', ' + error)// for debug
       // 401:未登录;
       if (code === 401 || code === 403) {
-        MessageBox.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
+        this.$Modal.confirm('你已被登出，可以取消继续留在该页面，或者重新登录', '确定登出', {
           confirmButtonText: '重新登录',
           cancelButtonText: '取消',
           type: 'warning'
@@ -63,7 +62,7 @@ axios.interceptors.response.use(
       }
       errorMsg = error.response.data
     }
-    Message({
+    this.$Message({
       message: errorMsg,
       type: 'error',
       duration: 8 * 1000

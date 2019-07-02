@@ -6,11 +6,11 @@
 </template>
 
 <script>
-  import PageHeader from './PageHeader'
+  import PageHeader from './MyHeader'
 
   export default {
     name: "Layout",
-    components:{
+    components: {
       PageHeader
     }
   }

@@ -1,7 +1,6 @@
 import {getToken, setToken, removeToken} from '@/utils/auth'
 import {clearStore, getStore, setStore} from '@/utils/localStorage'
 import axios, {fetch, post, put} from '@/utils/axios'
-import {Message} from 'element-ui'
 
 const user = {
   state: {
@@ -147,21 +146,6 @@ const user = {
         })
       })
     },
-    getMyTrainerList ({commit, state}) {
-      return new Promise((resolve, reject) => {
-        const username = state.userInfo.username
-        axios({
-          url: '/user/' + username + '/trainers',
-          method: 'get'
-        }).then(response => {
-          const data = response.data
-          commit('SET_TRAINER_LIST', data)
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
-      })
-    },
     updateUserProfile ({commit, state}, profileForm) {
       return new Promise((resolve, reject) => {
         const email = profileForm.email
@@ -177,20 +161,6 @@ const user = {
           resolve()
         }).catch(error => {
           reject(error)
-        })
-      })
-    },
-    addTrainer ({commit, state}, trainerId) {
-      const username = state.userInfo.username
-      return post('/user/' + username + '/trainer' + '?trainerId=' + trainerId).then(data => {
-        if (data) {
-          commit('SET_TRAINER_LIST', data)
-        }
-      }).catch(error => {
-        Message({
-          message: 'add failure',
-          type: 'error',
-          duration: 6 * 1000
         })
       })
     }
