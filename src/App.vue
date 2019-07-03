@@ -25,7 +25,7 @@
 </script>
 
 <style lang="scss">
-
+  //filter:alpha(Opacity=80)
   #app {
     font-family: 'Avenir', Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
@@ -33,6 +33,7 @@
     color: #2c3e50;
     height: 100%;
     width: 100%;
+    //min-width: 1020px;
   }
 
   html, body {
