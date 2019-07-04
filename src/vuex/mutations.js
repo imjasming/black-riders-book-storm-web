@@ -26,13 +26,13 @@ export const SET_CAROUSELITEMS_INFO = (state, { carouselItems, activity }) => {
 };
 
 // 设置电脑专栏数据
-export const SET_COMPUTER_INFO = (state, computer) => {
-  state.computer = computer;
+export const SET_COMPUTER_INFO = (state, indexRecommend) => {
+  state.indexRecommend = indexRecommend;
 };
 
 // 设置爱吃专栏数据
-export const SET_EAT_INFO = (state, eat) => {
-  state.eat = eat;
+export const SET_EAT_INFO = (state, hotBooks) => {
+  state.hotBooks = hotBooks;
 };
 
 // 减少秒杀时间

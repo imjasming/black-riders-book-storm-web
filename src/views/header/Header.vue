@@ -24,6 +24,7 @@
           <Badge dot v-else>
             <Avatar :src="userAvatar"></Avatar>
           </Badge>
+          <Icon type="ios-arrow-down" />
           <DropdownMenu slot="list">
             <DropdownItem v-for="item in dropdownMenuList" :key="item.id">
               <router-link :to="item.path">
@@ -104,6 +105,11 @@
 </script>
 
 <style lang="scss" scoped>
+  $color-primary: #409EFF;
+
+  div .ivu-select-dropdown{
+    border-radius: 0;
+  }
   .fix-header {
     position: fixed;
     top: 0;
@@ -141,8 +147,9 @@
   .box {
     width: 100%;
     height: 40px;
-    background-color: #e3e4e5;
+    background-color: #fff;
     z-index: 999;
+    box-shadow: 0 0 8px #000;
   }
 
   .nav {
@@ -159,10 +166,8 @@
   }
 
   .nav li {
-    float: left;
     font-size: 14px;
     line-height: 35px;
-    margin-right: 15px;
     font-weight: bold;
   }
 

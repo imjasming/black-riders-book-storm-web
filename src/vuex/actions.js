@@ -69,10 +69,10 @@ export const loadCarouselItems = ({ commit }) => {
 };
 
 // 加载电脑专栏数据
-export const loadComputer = ({ commit }) => {
+export const loadIndexRecommend = ({ commit }) => {
   return new Promise((resolve, reject) => {
-    const computer = {
-      title: '电脑数码',
+    const indexRecommend = {
+      title: '个性推荐',
       link: [ '电脑馆', '游戏极品', '装机大师', '职场焕新', '女神频道', '虚拟现实', '二合一平板', '电子教育', '万物周刊' ],
       detail: [
         {
@@ -137,15 +137,15 @@ export const loadComputer = ({ commit }) => {
         }
       ]
     };
-    commit('SET_COMPUTER_INFO', computer);
+    commit('SET_COMPUTER_INFO', indexRecommend);
   });
 };
 
 // 加载爱吃专栏数据
-export const loadEat = ({ commit }) => {
+export const loadHotBooks = ({ commit }) => {
   return new Promise((resolve, reject) => {
-    const eat = {
-      title: '爱吃',
+    const hotBooks = {
+      title: '热门图书',
       link: [ '休闲零食', '坚果', '牛奶', '饮料冲调', '食用油', '大米', '白酒', '红酒', '烧烤食材', '牛排', '樱桃' ],
       detail: [
         {
@@ -210,7 +210,7 @@ export const loadEat = ({ commit }) => {
         }
       ]
     };
-    commit('SET_EAT_INFO', eat);
+    commit('SET_EAT_INFO', hotBooks);
   });
 };
 

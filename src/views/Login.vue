@@ -11,19 +11,19 @@
             <p>欢迎登录</p>
           </div>
           <div class="form-box">
-            <Form ref="formInline" :model="formDate" :rules="ruleInline">
+            <Form ref="formInline" :model="loginForm" :rules="loginRule">
               <FormItem prop="username">
-                <i-input type="text" v-model="formDate.username" clearable size="large" placeholder="用户名">
+                <i-input type="text" v-model="loginForm.username" clearable size="large" placeholder="用户名">
                   <Icon type="person" slot="prepend"></Icon>
                 </i-input>
               </FormItem>
               <FormItem prop="password">
-                <i-input type="password" v-model="formDate.password" clearable size="large" placeholder="密码">
+                <i-input type="password" v-model="loginForm.password" clearable size="large" placeholder="密码">
                   <Icon type="ios-locked-outline" slot="prepend"></Icon>
                 </i-input>
               </FormItem>
               <FormItem>
-                <Button type="error" size="large" @click="handleSubmit('formInline')" long>登录</Button>
+                <Button type="error" size="large" @click.native.prevent="handleSubmit('formInline')" long>登录</Button>
               </FormItem>
             </Form>
           </div>
@@ -34,40 +34,35 @@
 </template>
 
 <script>
-  import store from '@/vuex/store';
-  import {mapMutations, mapActions} from 'vuex';
+  import {usernameRule, passwordRule} from "@/utils/validator";
 
   export default {
     name: 'Login',
     data() {
       return {
-        formDate: {
+        loginForm: {
           username: '',
           password: ''
         },
-        ruleInline: {
+        loginRule: {
           username: [
-            {required: true, message: '请输入用户名', trigger: 'blur'}
+            {required: true, validator: usernameRule, trigger: 'blur'}
           ],
           password: [
-            {required: true, message: '请输入密码', trigger: 'blur'},
-            {type: 'string', min: 6, message: '密码不能少于6位', trigger: 'blur'}
+            {required: true, validator: passwordRule, trigger: 'blur'},
           ]
         }
       };
     },
     methods: {
-      ...mapMutations(['SET_USER_LOGIN_INFO']),
-      ...mapActions(['login']),
       handleSubmit(name) {
-        const father = this;
-        console.log(this.formDate.username);
-        this.$refs[name].validate((valid) => {
+        console.log(this.loginForm.username);
+        this.$refs.loginForm.validate((valid) => {
           if (valid) {
-            this.login(father.formDate).then(result => {
+            this.$store.dispatch('login', this.loginForm).then(result => {
               if (result) {
                 this.$Message.success('登录成功');
-                father.$router.push('/');
+                this.$router.push('/');
               } else {
                 this.$Message.error('用户名或密码错误');
               }
@@ -78,7 +73,6 @@
         });
       }
     },
-    store
   };
 </script>
 

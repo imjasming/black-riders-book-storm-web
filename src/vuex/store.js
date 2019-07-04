@@ -39,8 +39,8 @@ export default new Vuex.Store({
       },
       goodsList: []
     },
-    computer: {}, // 电脑专栏
-    eat: {}, // 爱吃专栏
+    indexRecommend: {}, // 电脑专栏
+    hotBooks: {}, // 爱吃专栏
     asItems: [], // 广告
     goodsList: [], // 商品列表
     shoppingCart: [], // 购物车

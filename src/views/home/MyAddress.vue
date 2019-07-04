@@ -64,7 +64,7 @@ export default {
         city: '广州市',
         area: '天河区'
       },
-      ruleInline: {
+      loginRule: {
         name: [
           { required: true, message: '请输入姓名', trigger: 'blur' }
         ],
