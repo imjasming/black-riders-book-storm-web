@@ -27,6 +27,9 @@
               </FormItem>
             </Form>
           </div>
+          <div class="login-link">
+            <router-link to="SignUp">注册</router-link>
+          </div>
         </div>
       </i-col>
     </Row>
@@ -76,7 +79,9 @@
   };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import "../style/index";
+
   .container {
     margin-top: 30px;
     height: 485px;
@@ -104,7 +109,6 @@
 
   .login-container {
     width: 80%;
-    height: 280px;
     border: #ED3F14 solid 1px;
   }
 
@@ -121,5 +125,21 @@
   .form-box {
     width: 80%;
     margin: 30px auto;
+  }
+
+  .login-link {
+    margin-top: 16px;
+    margin-bottom: 8px;
+    margin-right: 16px;
+    text-align: end;
+
+    a {
+      margin-right: 8px;
+      color: $color-font-link;
+
+      &:hover {
+        color: $color-primary;
+      }
+    }
   }
 </style>
