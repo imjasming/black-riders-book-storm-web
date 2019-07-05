@@ -2,7 +2,7 @@
   <div class="box" :class="fixHeader">
     <div class="nav">
       <div id="logo">
-        <router-link to="/home">
+        <router-link to="/">
           <div class="logo-container">
             <div class="logo-img">
               <img src="../../assets/logo.png"/>
@@ -17,14 +17,14 @@
         <Input type="text" v-model="searchForm.query" placeholder="搜索图书"></Input>
       </Form>
       <div>
-        <Dropdown>
+        <Dropdown v-if="isLogin">
           <Badge :count="messageCount" v-if="messageCount > 0">
             <Avatar :src="userAvatar"></Avatar>
           </Badge>
           <Badge dot v-else>
             <Avatar :src="userAvatar"></Avatar>
           </Badge>
-          <Icon type="ios-arrow-down" />
+          <Icon type="ios-arrow-down"/>
           <DropdownMenu slot="list">
             <DropdownItem v-for="item in dropdownMenuList" :key="item.id">
               <router-link :to="item.path">
@@ -33,14 +33,17 @@
             </DropdownItem>
           </DropdownMenu>
         </Dropdown>
+        <div v-else class="header-link">
+          <router-link to="login">cnm，请登录</router-link>
+          |
+          <router-link to="SignUp">注册</router-link>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-  import store from '@/vuex/store';
-  import {mapState, mapActions} from 'vuex';
 
   export default {
     name: 'M-Header',
@@ -67,17 +70,21 @@
         ]
       };
     },
-    created() {
-      this.isLogin();
+    computed: {
+      isLogin() {
+        const token = this.$store.getters.token
+        const userInfo = this.$store.getters.userInfo
+        return !!(token && token !== '' && userInfo);
+
+      }
+
+    }, created() {
     },
     mounted() {
       window.addEventListener('scroll', this.setHeader)
     },
-    computed: {
-      ...mapState(['userInfo', 'shoppingCart'])
-    },
+
     methods: {
-      ...mapActions(['signOut', 'isLogin']),
       setHeader() {
         const top = document.body.scrollTop || document.documentElement.scrollTop || window.pageXOffset;
         if (top > 40) {
@@ -86,30 +93,23 @@
           this.fixHeader = ''
         }
       },
-      changeCity(city) {
-        this.city = city;
-      },
-      goToPay() {
-        this.$router.push('/order');
-      },
-      myInfo() {
-        this.$router.push('/home');
-      },
-      signOutFun() {
-        this.signOut();
-        this.$router.push('/');
-      }
     },
-    store
   };
 </script>
 
 <style lang="scss" scoped>
   $color-primary: #409EFF;
 
-  div .ivu-select-dropdown{
+  .header-link {
+    a {
+      margin: 0 4px;
+    }
+  }
+
+  div .ivu-select-dropdown {
     border-radius: 0;
   }
+
   .fix-header {
     position: fixed;
     top: 0;

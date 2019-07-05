@@ -51,26 +51,7 @@
             </ul>
           </div>
           <div class="goods-list">
-            <div class="goods-show-info" v-for="(item, index) in orderGoodsList" :key="index">
-              <div class="goods-show-img">
-                <router-link to="/goodsDetail"><img :src="item.img"/></router-link>
-              </div>
-              <div class="goods-show-price">
-                <span>
-                  <Icon type="social-yen text-danger"></Icon>
-                  <span class="seckill-price text-danger">{{item.price}}</span>
-                </span>
-              </div>
-              <div class="goods-show-detail">
-                <span>{{item.intro}}</span>
-              </div>
-              <div class="goods-show-num">
-                已有<span>{{item.remarks}}</span>人评价
-              </div>
-              <div class="goods-show-seller">
-                <span>{{item.shopName}}</span>
-              </div>
-            </div>
+            <book-item v-for="(item, index) in orderGoodsList" :product="item" :key="index"></book-item>
           </div>
         </div>
       </div>
@@ -86,8 +67,8 @@
   import Search from '@/views/Search';
   import GoodsListNav from '@/views/nav/GoodsListNav';
   import GoodsClassNav from '@/views/nav/GoodsClassNav';
-  // import store from '@/vuex/store';
-  import {mapState, mapActions, mapGetters, mapMutations} from 'vuex';
+  import BookItem from '@/components/BookItem'
+  import {orderListBy, reverseOrderListBy} from "@/utils/sort";
 
   export default {
     name: 'GoodsList',
@@ -104,27 +85,54 @@
           {title: '综合', en: 'sale'},
           {title: '评论数', en: 'remarks'},
           {title: '价格', en: 'price'}
-        ]
+        ],
+        isLoading: true,
+        sortOrderBy: 'sale',
+        inverseOrder: false,
+        currentSortIndex: 0,
       };
     },
     computed: {
-      ...mapState(['asItems', 'isLoading']),
-      ...mapGetters(['orderGoodsList'])
+      asItems() {
+        return this.$store.getters.adsItems
+      },
+      orderGoodsList() {
+        const list = this.$store.getters.goodsList
+        if (!this.inverseOrder) {
+          return orderListBy(list, this.sortOrderBy)
+        } else {
+          return reverseOrderListBy(list, this.sortOrderBy)
+        }
+      }
     },
     methods: {
-      ...mapActions(['loadGoodsList']),
-      ...mapMutations(['SET_GOODS_ORDER_BY']),
+      initGoodsList() {
+        this.isLoading = true
+        this.$store.dispatch('loadGoodsList').then(() => {
+          this.isLoading = false
+        }).catch(() => {
+          this.isLoading = false
+        })
+      },
       orderBy(data, index) {
-        console.log(data);
+        this.isLoading = true
         this.icon = ['arrow-down-a', 'arrow-down-a', 'arrow-down-a'];
         this.isAction = [false, false, false];
         this.isAction[index] = true;
         this.icon[index] = 'arrow-up-a';
-        //this.SET_GOODS_ORDER_BY(data);
+        this.sortOrderBy = data
+
+        if (this.currentSortIndex === index) {
+          this.inverseOrder = !this.inverseOrder
+        } else {
+          this.inverseOrder = false
+        }
+        this.currentSortIndex = index
+        this.isLoading = false
       }
     },
     created() {
-      //this.loadGoodsList();
+      this.initGoodsList()
     },
     mounted() {
       this.searchItem = this.$route.query.sreachData;
@@ -132,7 +140,8 @@
     components: {
       Search,
       GoodsListNav,
-      GoodsClassNav
+      GoodsClassNav,
+      BookItem
     },
     //store
   };
@@ -143,16 +152,6 @@
     margin: 15px auto;
     width: 93%;
     min-width: 1000px;
-  }
-
-  .text-danger {
-    color: #A94442;
-  }
-
-  .seckill-price {
-    margin-right: 5px;
-    font-size: 25px;
-    font-weight: bold;
   }
 
   .goods-box {
@@ -264,44 +263,6 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-  }
-
-  .goods-show-info {
-    width: 240px;
-    padding: 10px;
-    margin: 15px 0px;
-    border: 1px solid #fff;
-    cursor: pointer;
-  }
-
-  .goods-show-info:hover {
-    border: 1px solid #ccc;
-    box-shadow: 0px 0px 15px #ccc;
-  }
-
-  .goods-show-price {
-    margin-top: 6px;
-  }
-
-  .goods-show-detail {
-    font-size: 12px;
-    margin: 6px 0px;
-  }
-
-  .goods-show-num {
-    font-size: 12px;
-    margin-bottom: 6px;
-    color: #009688;
-  }
-
-  .goods-show-num span {
-    color: #005AA0;
-    font-weight: bold;
-  }
-
-  .goods-show-seller {
-    font-size: 12px;
-    color: #E4393C;
   }
 
   .goods-page {

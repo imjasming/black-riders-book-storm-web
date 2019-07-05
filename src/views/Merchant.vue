@@ -3,7 +3,7 @@
     <ShopHeader></ShopHeader>
     <div class="goods-container">
       <div class="goods-list">
-        <div class="goods-show-info" v-for="(item, index) in orderGoodsList" :key="index">
+        <div class="goods-show-info" v-for="(item, index) in orderListBy" :key="index">
           <div class="goods-show-img">
             <router-link to="/goodsDetail"><img :src="item.img"/></router-link>
           </div>
@@ -39,7 +39,7 @@
       this.loadGoodsList();
     },
     computed: {
-      ...mapGetters(['orderGoodsList'])
+      ...mapGetters(['orderListBy'])
     },
     methods: {
       ...mapActions(['loadGoodsList'])

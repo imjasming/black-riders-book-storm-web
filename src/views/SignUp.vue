@@ -7,8 +7,6 @@
       <i-col span="8" class="box">
         <div class="sign-up-title">
           <h1>欢迎注册账号</h1>
-          <br>
-          <h2>BIT MALL, 天天低价品质保证, 让消费者钱更值钱</h2>
         </div>
         <div class="sing-up-step-box">
           <Steps :current="signUpStep">

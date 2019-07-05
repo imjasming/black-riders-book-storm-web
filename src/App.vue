@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <Header></Header>
-    <router-view/>
+    <router-view class="main"/>
     <Footer v-if="excludeRoutes.indexOf($route.name) == -1"></Footer>
   </div>
 </template>
@@ -39,5 +39,10 @@
   html, body {
     height: 100%;
     width: 100%;
+  }
+
+  .main{
+    position: relative;
+    top: 40px;
   }
 </style>

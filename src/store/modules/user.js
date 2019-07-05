@@ -32,13 +32,22 @@ const user = {
   },
 
   actions: {
-    initAccessToken ({commit}, param) {
+    initAccessToken({commit}, param) {
       const token = `${param.tokenType} ${param.token}`
       commit('SET_TOKEN', token)
       commit('SET_USERNAME', param.username)
     },
 
-    login ({commit}, loginForm) {
+    isLogin({commit}) {
+      const token = getStore('token')
+      const userInfo = getStore('userInfo')
+      if (token && token !== '' && userInfo) {
+        commit('SET_TOKEN', token)
+        commit('SET_USRE_INFO', userInfo)
+      }
+    },
+
+    login({commit}, loginForm) {
       return new Promise((resolve, reject) => {
         const username = loginForm.username
         const password = loginForm.password
@@ -66,7 +75,7 @@ const user = {
       })
     },
 
-    socialBind ({commit}, registerForm) {
+    socialBind({commit}, registerForm) {
       return new Promise((resolve, reject) => {
         const username = registerForm.username
         const email = registerForm.email
@@ -86,7 +95,7 @@ const user = {
       })
     },
 
-    register ({commit}, registerForm) {
+    register({commit}, registerForm) {
       return new Promise((resolve, reject) => {
         const username = registerForm.username
         const email = registerForm.email
@@ -108,7 +117,7 @@ const user = {
       })
     },
 
-    logout ({commit, state}) {
+    logout({commit, state}) {
       return new Promise((resolve, reject) => {
         //clear token
         commit('SET_TOKEN', '')
@@ -117,7 +126,7 @@ const user = {
         resolve()
       })
     },
-    initUserData ({commit, state}) {
+    initUserData({commit, state}) {
       const username = state.username
       fetch(`/user/${username}/info`).then(data => {
         commit('SET_INFO', data)
@@ -130,7 +139,7 @@ const user = {
 
       })
     },
-    getInfo ({commit, state}) {
+    getInfo({commit, state}) {
       return new Promise((resolve, reject) => {
         const username = state.userInfo.username
         axios({
@@ -146,7 +155,7 @@ const user = {
         })
       })
     },
-    updateUserProfile ({commit, state}, profileForm) {
+    updateUserProfile({commit, state}, profileForm) {
       return new Promise((resolve, reject) => {
         const email = profileForm.email
         const username = state.userInfo.username
