@@ -1,17 +1,18 @@
 import axios from 'axios'
 import store from '../store'
 import {getToken} from '@/utils/auth'
+import Message from 'iview'
 
-export const serverUrl = 'http://127.0.0.1:8080'
+export const serverUrl = 'http://172.30.67.240:8080'
 
-axios.default.timeout = 16000
+/*request.default.timeout = 16000
 axios.defaults.headers.post['Content-Type'] = 'application/json'
-axios.defaults.baseURL = serverUrl
+axios.defaults.baseURL = serverUrl*/
 
-/*const axios = axios.create({
-  //baseURL: serverUrl,
+const request = axios.create({
+  baseURL: serverUrl,
   timeout: 16000
-})*/
+})
 // !!!!!!!!!!!!!!!!!!!!!!!
 // 发送多个请求时，由于使用的时自己封装的 axios，以下两函数没有封装进去
 // !!!!!!!!!!!!!!!!!!!!!!
@@ -19,7 +20,7 @@ axios.defaults.baseURL = serverUrl
 //axios.spread = axios.spread
 
 // request拦截器
-axios.interceptors.request.use(config => {
+request.interceptors.request.use(config => {
   if (store.getters.token) {
     config.headers['Authorization'] = getToken()
   }
@@ -38,7 +39,7 @@ axios.interceptors.request.use(config => {
 })
 
 // response拦截器
-axios.interceptors.response.use(
+request.interceptors.response.use(
   response => {
     return response
   },
@@ -73,7 +74,7 @@ axios.interceptors.response.use(
 
 export const del = (url, data) => {
   return new Promise((resolve, reject) => {
-    axios.delete(url, data).then(response => {
+    request.delete(url, data).then(response => {
       resolve(response.data)
     }).catch(error => {
       reject(error)
@@ -83,7 +84,7 @@ export const del = (url, data) => {
 
 export const post = (url, data) => {
   return new Promise((resolve, reject) => {
-    axios.post(url, data).then(response => {
+    request.post(url, data).then(response => {
       resolve(response.data)
     }).catch(error => {
       reject(error)
@@ -93,7 +94,7 @@ export const post = (url, data) => {
 
 export const put = (url, data) => {
   return new Promise((resolve, reject) => {
-    axios.put(url, data).then(response => {
+    request.put(url, data).then(response => {
       resolve(response.data)
     }).catch(error => {
       reject(error)
@@ -103,7 +104,7 @@ export const put = (url, data) => {
 
 export const fetch = (url, param) => {
   return new Promise((resolve, reject) => {
-    axios.get(url, {
+    request.get(url, {
       params: param
     }).then(response => {
       resolve(response.data)
@@ -113,4 +114,4 @@ export const fetch = (url, param) => {
   })
 }
 
-export default axios
+export default request

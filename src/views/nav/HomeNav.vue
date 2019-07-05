@@ -14,20 +14,20 @@
         <!-- 幻灯片 -->
         <div>
           <Carousel autoplay loop>
-            <CarouselItem v-for="(item, index) in marketing.carouselItems" :key="index">
-              <router-link to="/goodsList">
-                <img :src="item">
+            <CarouselItem v-for="(item, index) in marketing.banner" :key="index">
+              <router-link :to="item.targetUrl">
+                <img :src="item.imgUrl">
               </router-link>
             </CarouselItem>
           </Carousel>
         </div>
-        <div class="nav-show">
-          <div class="nav-show-img" v-for="(item, index) in marketing.activity" :key="index">
-            <router-link to="/goodsList">
-              <img :src="item">
+        <!--<div class="nav-show">
+          <div class="nav-show-img" v-for="(item, index) in marketing.activities" :key="index">
+            <router-link :to="item.targetUrl">
+              <img :src="item.imgUrl">
             </router-link>
           </div>
-        </div>
+        </div>-->
       </div>
     </div>
     <transition name="fade">
@@ -54,6 +54,7 @@
 
 <script>
   import store from '@/store';
+  import request from '@/utils/request'
 
   export default {
     name: 'HomeNav',
@@ -104,17 +105,32 @@
           '全球购',
           '金融'
         ],
+        marketing:{},
       };
     },
     computed: {
-      marketing(){
+      /*marketing(){
         return this.$store.getters.marketing
-      },
+      },*/
       currentCategory() {
         return this.categoryList[this.currentShow]
       }
     },
+    mounted() {
+      this.setItemPanel()
+      this.getMarketing()
+    },
+    updated() {
+      this.setItemPanel()
+    },
     methods: {
+      getMarketing(){
+        request('/index/marketing').then(response => {
+          let t = this.showItemPanel
+          this.marketing = response.data.data
+        }).catch(error => {
+        })
+      },
       showDetail(index) {
         this.currentShow = index;
         this.showItemPanel = true
@@ -129,12 +145,6 @@
           this.$refs.itemPanel.style.top = this.$refs.navSide.offsetTop + 'px';
         }
       }
-    },
-    mounted() {
-      this.setItemPanel()
-    },
-    updated() {
-      this.setItemPanel()
     },
     store
   };

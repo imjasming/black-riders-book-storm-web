@@ -8,7 +8,7 @@
           <span class="item-class-title">{{content.title}}</span>
         </div>
         <div class="content-list">
-          <book-item v-for="(item, index) in content.items" :product="item" :key="index"></book-item>
+          <book-item v-for="(item, index) in content.bookInfoList" :product="item" :key="index"></book-item>
         </div>
       </div>
     </div>
@@ -18,36 +18,38 @@
 <script>
   import Search from '@/views/Search';
   import HomeNav from '@/views/nav/HomeNav';
-  import store from '@/store';
   import BookItem from '@/components/BookItem'
+  import request from "@/utils/request";
 
   export default {
     name: 'Index',
     data() {
       return {
-        setIntervalObj: null
+        setIntervalObj: null,
+        indexContents: {},
+        marketing: {}
       };
     },
+    computed: {},
     created() {
     },
     mounted() {
-      this.initData()
+      this.getIndexContents()
       this.checkData()
     },
     methods: {
-      initData() {
-        this.$store.dispatch('loadIndexContents')
-        this.$store.dispatch('loadMarketing')
+      getIndexContents() {
+        request.get('/index/contents').then(response => {
+          this.indexContents = response.data.data
+        }).catch(error => {
+
+        })
       },
       checkData() {
         const d1 = this.indexContents
         const d2 = this.indexContents.items
+        const d3 = this.marketing
         console.log('')
-      }
-    },
-    computed: {
-      indexContents() {
-        return this.$store.getters.indexContents
       }
     },
     components: {
@@ -58,15 +60,15 @@
     destroyed() {
       clearInterval(this.setIntervalObj);
     },
-    store
-  };
+  }
+  ;
 </script>
 
 <style lang="scss" scoped>
   $color-primary: #409EFF;
 
   .container {
-  /*background-color: #F6F6F6;*/
+    /*background-color: #F6F6F6;*/
   }
 
   .content {
@@ -166,7 +168,7 @@
     margin-left: 15px;
   }
 
-  .content-list{
+  .content-list {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;

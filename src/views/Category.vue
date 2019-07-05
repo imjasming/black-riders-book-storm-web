@@ -105,6 +105,12 @@
         }
       }
     },
+    created() {
+      this.initGoodsList()
+    },
+    mounted() {
+      this.searchItem = this.$route.query.sreachData;
+    },
     methods: {
       initGoodsList() {
         this.isLoading = true
@@ -130,12 +136,6 @@
         this.currentSortIndex = index
         this.isLoading = false
       }
-    },
-    created() {
-      this.initGoodsList()
-    },
-    mounted() {
-      this.searchItem = this.$route.query.sreachData;
     },
     components: {
       Search,

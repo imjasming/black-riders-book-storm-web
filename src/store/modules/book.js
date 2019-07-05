@@ -1,34 +1,34 @@
 import {setStore} from "@/utils/localStorage";
-import axios from "@/utils/axios";
+import axios from "@/utils/request";
 
 const book = {
   state: {
     bookInfo: {
-      id: '',
+      id: '1',
       bookImg: [
-        '',
+        'http://img3m1.ddimg.cn/65/14/27864011-1_w_9.jpg',
       ],
-      title: '',
-      bookName: '',
-      outline: '',
-      detail: '',
-      authors: [],
-      press: '',
-      publishDate: '',
-      version: '',
+      title: '三体',
+      bookName: '三体',
+      outline: '', // 概述
+      detail: '', // 图书详情
+      author: '刘慈欣',
+      press: '机械工业出版社',
+      publishDate: '2019-1',
+      version: '第三版',
       isbn: '',
-      price: 0,
-      pages: 0,
+      price: 100,
+      pages: 100,
       catalog: '',
-      marketPrice: 0,
-      dealMount: 0, // 交易数量
-      lookMount: 0, // 查看数量
+      marketPrice: 99,
+      dealMount: 11111, // 交易数量
+      lookMount: 22222, // 查看数量
       discount: 0, // 优惠
-      storeMount: 0, // 库存
+      storeMount: 100, // 库存
       storeTime: '', // 库存日期
       packStyle: '', //包装类型
       description: '',
-      content: '',
+      content: '.。。。。。。。。。',
       remarksNum: 0, // 评论数
     },
     storeInfo: {

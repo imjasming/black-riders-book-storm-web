@@ -1,7 +1,7 @@
 <template>
   <div class="goods-show-info">
     <div class="goods-show-img">
-      <router-link :to="'/goodsDetail?item=' + item.id"><img :src="item.img"/></router-link>
+      <router-link :to="'/goodsDetail?item=' + item.id"><img :src="item.imageUrl"/></router-link>
     </div>
     <div class="goods-show-price">
       <router-link :to="'/goodsDetail?item=' + item.id">
@@ -13,7 +13,7 @@
     </div>
     <div class="goods-show-detail">
       <router-link :to="'/goodsDetail?item=' + item.id">
-        <span>{{item.intro}}</span>
+        <span>{{item.name}}</span>
       </router-link>
     </div>
     <div class="goods-show-num">

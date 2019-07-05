@@ -8,7 +8,7 @@ const SignUp = resolve => require(['@/views/SignUp'], resolve);
 const CheckPhone = resolve => require(['@/views/signUp/CheckPhone'], resolve);
 const InputInfo = resolve => require(['@/views/signUp/InputInfo'], resolve);
 const SignUpDone = resolve => require(['@/views/signUp/SignUpDone'], resolve);
-const GoodsList = resolve => require(['@/views/GoodsList'], resolve);
+const Category = resolve => require(['@/views/Category'], resolve);
 const GoodsDetail = resolve => require(['@/views/GoodsDetail'], resolve);
 const ShoppingCart = resolve => require(['@/views/ShoppingCart'], resolve);
 const Order = resolve => require(['@/views/Order'], resolve);
@@ -67,9 +67,9 @@ const router = new VueRouter({
       ]
     },
     {
-      path: '/goodsList', // 商品列表
-      name: 'GoodsList',
-      component: GoodsList
+      path: '/category', // 商品列表
+      name: 'Category',
+      component: Category
     },
     {
       path: '/goodsDetail', // 商品详情

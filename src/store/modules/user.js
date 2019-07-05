@@ -1,6 +1,6 @@
 import {getToken, setToken, removeToken} from '@/utils/auth'
 import {clearStore, getStore, setStore} from '@/utils/localStorage'
-import axios, {fetch, post, put} from '@/utils/axios'
+import request, {fetch, post, put} from '@/utils/request'
 
 const user = {
   state: {
@@ -51,7 +51,7 @@ const user = {
       return new Promise((resolve, reject) => {
         const username = loginForm.username
         const password = loginForm.password
-        axios({
+        request({
           url: `/auth/form/token?username=${username}&password=${password}`,
           method: 'post',
           data: {
@@ -81,7 +81,7 @@ const user = {
         const email = registerForm.email
         const password = registerForm.password
         const key = registerForm.key
-        axios({
+        request({
           url: '/social/bind',
           method: 'post',
           data: {
@@ -101,7 +101,7 @@ const user = {
         const email = registerForm.email
         const password = registerForm.password
 
-        axios({
+        request({
           url: '/register',
           method: 'post',
           data: {
@@ -142,7 +142,7 @@ const user = {
     getInfo({commit, state}) {
       return new Promise((resolve, reject) => {
         const username = state.userInfo.username
-        axios({
+        request({
           url: '/user/' + username + '/info',
           method: 'get'
         }).then(response => {

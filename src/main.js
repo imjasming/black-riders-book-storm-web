@@ -10,6 +10,8 @@ import 'iview/dist/styles/iview.css';
 
 Vue.use(iView)
 
+Vue.prototype.$Message = iView.Message
+
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */

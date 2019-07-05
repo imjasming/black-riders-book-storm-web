@@ -1,5 +1,5 @@
 import {clearStore, getStore, setStore} from '@/utils/localStorage'
-import {axios, fetch} from '@/utils/axios'
+import request, {fetch} from '@/utils/request'
 
 const portal = {
   state: {
@@ -152,7 +152,7 @@ const portal = {
       commit('SET_GOODS_ORDER_BY', order)
     },
     loadGoodsList({commit}) {
-      const data = [
+      /*const data = [
         {
           id: '',
           img: 'static/img/goodsList/item-show-1.jpg',
@@ -285,18 +285,18 @@ const portal = {
           sale: 3560
         }
       ]
-      commit('SET_GOODS_LIST', data)
-      /*return new Promise((resolve, reject) => {
-        fetch('/index/items').then(response => {
-          commit('SET_GOODS_LIST', response)
+      commit('SET_GOODS_LIST', data)*/
+      return new Promise((resolve, reject) => {
+        request.get('/index/items').then(response => {
+          commit('SET_GOODS_LIST', response.data.data)
           resolve()
         }).catch(error => {
           reject(error)
         })
-      })*/
+      })
     },
     loadMarketing({commit}) {
-      const data = {
+      /*const data = {
         carouselItems: [
           'static/img/nav/1.jpg',
           'static/img/nav/2.jpg',
@@ -309,19 +309,19 @@ const portal = {
           'static/img/nav/nav_showimg2.jpg'
         ]
       };
-      commit('SET_MARKETING', data);
-      /*return new Promise((resolve, reject) => {
-        fetch('/index/marketing').then(response => {
-          commit('SET_MARKETING', response)
+      commit('SET_MARKETING', data);*/
+      return new Promise((resolve, reject) => {
+        request.get('/index/marketing').then(response => {
+          commit('SET_MARKETING', response.data)
           resolve()
         }).catch(error => {
           reject(error)
         })
-      })*/
+      })
     },
     loadCategoryList({commit}) {
       return new Promise((resolve, reject) => {
-        fetch('/index/category').then(response => {
+        request.get('/index/category').then(response => {
           commit('SET_CATEGORY_LIST', response)
           resolve()
         }).catch(error => {
@@ -329,8 +329,8 @@ const portal = {
         })
       })
     },
-    loadIndexContents({commit}) {
-      /*const data = [
+    loadIndexContents({commit}) {/*
+      /!*const data = [
         {
           title: '个性推荐',
           link: ['电脑馆', '游戏极品', '装机大师', '职场焕新', '女神频道', '虚拟现实', '二合一平板', '电子教育', '万物周刊'],
@@ -463,7 +463,7 @@ const portal = {
             }
           ]
         }
-      ]*/
+      ]*!/
       const data = [
         {
           title: '推荐',
@@ -601,15 +601,16 @@ const portal = {
             }]
         }
       ]
-      commit('SET_INDEX_CONTENTS', data)
-      /*return new Promise((resolve, reject) => {
-        fetch('/index/contents').then(response => {
-          commit('SET_INDEX_CONTENTS', response)
+      commit('SET_INDEX_CONTENTS', data)*/
+      return new Promise((resolve, reject) => {
+        request.get('/index/contents').then(response => {
+          commit('SET_INDEX_CONTENTS', response.data)
+          console.log(JSON.stringify(response.data))
           resolve()
         }).catch(error => {
           reject(error)
         })
-      })*/
+      })
     }
   }
 }
