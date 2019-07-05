@@ -1,16 +1,9 @@
 <template>
   <div>
-    <div class="nav-item">
-      <ul>
-        <li v-for="(item,index) in nav" :key="index">
-          <a href="#">{{item}}</a>
-        </li>
-      </ul>
-    </div>
     <div class="nav-body">
       <!-- 侧边导航 -->
       <div class="nav-side" ref="navSide">
-        <ul v-for="category in categoryList" :key="category.id">
+        <ul v-for="(category, index) in categoryList" :key="index">
           <li @mouseenter="showDetail(category.id)" @mouseleave="hideDetail(category.id)"
           >
             <span v-for="(item, index) in category.navTitles" :key="index" class="nav-side-item">{{item + ' '}}</span>/

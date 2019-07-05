@@ -51,37 +51,6 @@
             </div>
           </div>
         </div>
-        <!-- 选择颜色 -->
-        <div class="item-select">
-          <div class="item-select-title">
-            <p>选择颜色</p>
-          </div>
-          <div class="item-select-column">
-            <div class="item-select-row" v-for="(items, index) in goodsInfo.setMeal" :key="index">
-              <div class="item-select-box" v-for="(item, index1) in items" :key="index1" @click="select(index, index1)" :class="{'item-select-box-active': ((index * 3) + index1) === selectBoxIndex}">
-                <div class="item-select-img">
-                  <img :src="item.img" alt="">
-                </div>
-                <div class="item-select-intro">
-                  <p>{{item.intro}}</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <!-- 白条分期 -->
-        <div class="item-select">
-          <div class="item-select-title">
-            <p>白条分期</p>
-          </div>
-          <div class="item-select-row">
-            <div class="item-select-class" v-for="(item,index) in hirePurchase" :key="index">
-              <Tooltip :content="item.tooltip" placement="top-start">
-                <span>{{item.type}}</span>
-              </Tooltip>
-            </div>
-          </div>
-        </div>
         <br>
         <div class="add-buy-car-box">
           <div class="add-buy-car">

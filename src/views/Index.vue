@@ -1,6 +1,5 @@
 <template>
   <div class="container">
-    <Search></Search>
     <HomeNav></HomeNav>
     <!-- 商品显示区域 -->
     <div class="content">
@@ -51,7 +50,7 @@
   import Search from '@/views/Search';
   import HomeNav from '@/views/nav/HomeNav';
   import store from '@/store';
-  import {mapState, mapActions, mapGetters, mapMutations} from 'vuex';
+  import BookItem from '@/components/BookItem'
 
   export default {
     name: 'Index',
@@ -84,7 +83,8 @@
     },
     components: {
       Search,
-      HomeNav
+      HomeNav,
+      BookItem
     },
     destroyed() {
       clearInterval(this.setIntervalObj);

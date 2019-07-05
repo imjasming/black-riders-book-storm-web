@@ -26,7 +26,7 @@
   import ShopHeader from '@/views/header/ShopHeader';
   import ShowGoods from '@/views/goodsDetail/ShowGoods';
   import ShowGoodsDetail from '@/views/goodsDetail/ShowGoodsDetail';
-  //import store from '@/vuex/store';
+  import store from '@/vuex/store';
   import {mapState, mapActions} from 'vuex';
 
   export default {
@@ -36,7 +36,7 @@
       next();
     },
     created() {
-      //this.loadGoodsInfo();
+      this.loadGoodsInfo();
     },
     data() {
       return {
@@ -56,7 +56,7 @@
       ShowGoods,
       ShowGoodsDetail
     },
-    //store
+    store
   };
 </script>
 
