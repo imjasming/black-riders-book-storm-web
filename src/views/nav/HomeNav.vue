@@ -172,7 +172,7 @@
 
   /*大的导航信息，包含导航，幻灯片等*/
   .nav-body {
-    width: 1020px;
+    width: 1050px;
     height: 485px;
     margin: 0px auto;
   }

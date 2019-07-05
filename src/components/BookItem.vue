@@ -57,7 +57,7 @@
   }
 
   .goods-show-info {
-    width: 240px;
+    width: 206px;
     padding: 10px;
     margin: 15px 0px;
     border: 1px solid #fff;
@@ -66,6 +66,19 @@
   .goods-show-info:hover {
     border: 1px solid #ccc;
     box-shadow: 0px 0px 15px #ccc;
+  }
+
+  .goods-show-img {
+    height: 186px;
+    width: 186px;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+      img {
+        width: 100%;
+    }
   }
 
   .goods-show-price {

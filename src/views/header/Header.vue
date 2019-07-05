@@ -1,5 +1,5 @@
 <template>
-  <div class="box" :class="fixHeader">
+  <div class="box fix-header">
     <div class="nav">
       <div id="logo">
         <router-link to="/">
@@ -81,7 +81,7 @@
     }, created() {
     },
     mounted() {
-      window.addEventListener('scroll', this.setHeader)
+      //window.addEventListener('scroll', this.setHeader)
     },
 
     methods: {

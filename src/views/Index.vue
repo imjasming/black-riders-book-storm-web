@@ -6,40 +6,9 @@
       <div v-for="content in indexContents" class="item-class">
         <div class="item-class-head">
           <span class="item-class-title">{{content.title}}</span>
-          <ul>
-            <li v-for="(item, index) in content.link" :key="index">
-              <router-link to="/goodsList">{{item}}</router-link>
-            </li>
-          </ul>
         </div>
-        <div class="item-class-content" v-for="(item, index) in content.detail" :key="index">
-          <div class="item-content-top">
-            <div class="item-big-img">
-              <router-link to="/goodsList">
-                <img :src="item.bigImg" alt="">
-              </router-link>
-            </div>
-            <div class="item-four-img">
-              <div class="item-four-detail" v-for="(subItem, index) in item.itemFour" :key="index">
-                <div class="item-four-detail-text">
-                  <p class="pt_bi_tit">{{subItem.title}}</p>
-                  <p class="pt_bi_promo">{{subItem.intro}}</p>
-                </div>
-                <div class="item-four-detail-img">
-                  <router-link to="/goodsList">
-                    <img :src="subItem.img" alt="">
-                  </router-link>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="item-content-bottom">
-            <div class="item-content-bottom-img" v-for="(subImg, index) in item.itemContent" :key="index">
-              <router-link to="/goodsList">
-                <img :src="subImg">
-              </router-link>
-            </div>
-          </div>
+        <div class="content-list">
+          <book-item v-for="(item, index) in content.items" :product="item" :key="index"></book-item>
         </div>
       </div>
     </div>
@@ -66,18 +35,18 @@
       this.checkData()
     },
     methods: {
-      initData(){
+      initData() {
         this.$store.dispatch('loadIndexContents')
         this.$store.dispatch('loadMarketing')
       },
-      checkData(){
+      checkData() {
         const d1 = this.indexContents
-        const d2 = this.marketing
+        const d2 = this.indexContents.items
         console.log('')
       }
     },
     computed: {
-      indexContents(){
+      indexContents() {
         return this.$store.getters.indexContents
       }
     },
@@ -93,35 +62,17 @@
   };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  $color-primary: #409EFF;
+
   .container {
-    //background-color: #F6F6F6;
+  /*background-color: #F6F6F6;*/
   }
 
   .content {
-    width: 1008px;
-    margin: 0px auto;
-  }
-
-  /*****************************秒杀专栏开始*****************************/
-  /*秒杀专栏*/
-  .seckill {
-    width: 100%;
-    height: 330px;
-    margin: 15px auto;
-    background-color: #fff;
-  }
-
-  .seckill-head {
-    width: 100%;
-    height: 50px;
-    background-color: #e01222;
-  }
-
-  .seckill-icon {
-    width: 68px;
-    height: 100%;
-    float: left;
+    width: 1050px;
+    margin: 10px auto;
+    border: 1px solid $color-primary;
   }
 
   .seckill-icon img {
@@ -147,75 +98,6 @@
     }
   }
 
-  .seckill-text {
-    width: 300px;
-    height: 100%;
-    float: left;
-  }
-
-  .seckill-text .seckill-title {
-    font-size: 22px;
-    line-height: 50px;
-    color: #fff;
-  }
-
-  .seckill-text .seckill-remarks {
-    margin-left: 5px;
-    font-size: 10px;
-    color: #fff;
-  }
-
-  /*倒计时*/
-  .count-down {
-    height: 100%;
-    margin-right: 30px;
-    line-height: 50px;
-    float: right;
-  }
-
-  .count-down-text {
-    color: #fff;
-  }
-
-  .count-down-num {
-    padding: 3px;
-    border-radius: 5px;
-    background-color: #440106;
-    font-size: 26px;
-    font-weight: bold;
-    color: #f90013;
-  }
-
-  .count-down-point {
-    font-size: 26px;
-    font-weight: bold;
-    color: #440106;
-  }
-
-  .seckill-content {
-    width: 100%;
-    height: 280px;
-  }
-
-  .seckill-item {
-    width: 183px;
-    height: 250px;
-    margin-top: 15px;
-    margin-left: 15px;
-    box-shadow: 0px 0px 8px #ccc;
-    cursor: pointer;
-    float: left;
-  }
-
-  .seckill-item-img {
-    width: 160px;
-    height: 160px;
-    margin: 0px auto;
-    overflow: hidden;
-    border-bottom: 1px solid #ccc;
-    background-color: #fff;
-  }
-
   .seckill-item-img img {
     width: 130px;
     height: 130px;
@@ -229,22 +111,8 @@
     transition: margin-top 0.3s;
   }
 
-  .seckill-item-info {
-    padding: 5px;
-    padding-left: 15px;
-    padding-right: 15px;
-    font-size: 12px;
-    color: #009688;
-  }
-
   .seckill-item-info i:first-child {
     font-size: 14px;
-  }
-
-  .seckill-price {
-    margin-right: 5px;
-    font-size: 25px;
-    font-weight: bold;
   }
 
   /*****************************秒杀专栏结束*****************************/
@@ -252,19 +120,13 @@
   /*****************************商品专栏开始*****************************/
   .item-class {
     width: 100%;
-    height: 470px;
-    margin-top: 15px;
     background-color: #fff;
   }
 
   .item-class-head {
     width: 100%;
     height: 50px;
-    background-color: #4488a7;
-  }
-
-  .item-class-eat-head {
-    background-color: #ecb226;
+    background-color: $color-primary;
   }
 
   .item-class-head ul {
@@ -304,29 +166,10 @@
     margin-left: 15px;
   }
 
-  .item-class-content {
-    width: 49%;
-    cursor: pointer;
-    border-right: 1px solid #ccc;
-    margin-left: 0.9%;
-    /*background-color: #cff;*/
-    float: left;
-  }
-
-  .item-class-content:nth-child(odd) {
-    border: none;
-  }
-
-  .item-content-top {
-    width: 100%;
-    height: 260px;
-  }
-
-  .item-big-img {
-    width: 180px;
-    height: 260px;
-    overflow: hidden;
-    float: left;
+  .content-list{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
   }
 
   .item-big-img img {
@@ -339,12 +182,6 @@
     transition: margin-left 0.3s;
   }
 
-  .item-four-img {
-    width: 303px;
-    margin-left: 8px;
-    float: left;
-  }
-
   .item-four-detail img {
     margin-left: 0px;
     transition: margin-left 0.3s;
@@ -355,66 +192,9 @@
     transition: margin-left 0.3s;
   }
 
-  .item-four-detail {
-    width: 152px;
-    height: 130px;
-    margin-left: -1px;
-    float: left;
-  }
-
-  .item-four-detail:first-child {
-    border-right: 1px solid #ccc;
-    border-bottom: 1px solid #ccc;
-  }
-
-  .item-four-detail:last-child {
-    border-top: 1px solid #ccc;
-    border-left: 1px solid #ccc;
-  }
-
-  .item-four-detail-text {
-    width: 50px;
-    margin-left: 5px;
-    margin-top: 15px;
-    float: left;
-  }
-
-  .item-four-detail-img {
-    width: 96px;
-    margin-top: 15px;
-    overflow: hidden;
-    float: left;
-  }
-
   .item-four-detail-img img {
     margin-left: 5px;
     width: 90px;
-  }
-
-  .pt_bi_tit {
-    font-weight: bold;
-    font-size: 12px;
-    color: #4488a7;
-  }
-
-  .pt_bi_tit-eat {
-    color: #ecb127;
-  }
-
-  .pt_bi_promo {
-    color: #00695c;
-  }
-
-  .item-content-bottom {
-    width: 100%;
-    margin-top: 8px;
-  }
-
-  .item-content-bottom-img {
-    width: 156px;
-    margin-right: 8px;
-    overflow: hidden;
-    float: left;
   }
 
   .item-content-bottom-img img {
