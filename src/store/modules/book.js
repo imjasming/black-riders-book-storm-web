@@ -1,8 +1,9 @@
-import {setStore} from "@/utils/localStorage";
-import axios from "@/utils/request";
+import {getStore, setStore} from "@/utils/localStorage";
+import request from "@/utils/request";
 
 const book = {
   state: {
+    bookId: getStore('bookId'),
     bookInfo: {
       id: '1',
       bookImg: [
@@ -51,6 +52,10 @@ const book = {
     ]
   },
   mutations: {
+    SET_BOOK_ID: (state, id) => {
+      state.bookId = id
+      setStore('bookId', id)
+    },
     SET_BOOK_INFO: (state, info) => {
       state.bookInfo = info
       setStore('bookInfo', info)
@@ -65,14 +70,30 @@ const book = {
     }
   },
   actions: {
+    setBookId({commit}, bookId) {
+      commit('SET_BOOK_ID', bookId)
+    },
+    setBookInfo({commit}, info) {
+      commit('SET_BOOK_INFO', info)
+    },
+    setBookStore({commit}, info) {
+      commit('SET_STORE_INFO', info)
+    },
+    setBookComments({commit}, list) {
+      commit('SET_COMMENTS', list)
+    },
+    setCommentList({commit}, info) {
+      commit('SET_COMMENTS', info)
+    },
     loadBookInfo({commit}, bookId) {
       return new Promise((resolve, reject) => {
-        axios({
+        request({
           url: `/bookInfo?id=${bookId}`,
           method: 'get'
         }).then(response => {
-          commit('SET_BOOK_INFO', response.data)
-          resolve()
+          const data = response.data.data
+          commit('SET_BOOK_INFO', data)
+          resolve(data)
         }).catch(error => {
           reject(error)
         })
@@ -80,7 +101,7 @@ const book = {
     },
     loadStoreInfo({commit}, storeId) {
       return new Promise((resolve, reject) => {
-        axios({
+        request({
           url: `/store?id=${storeId}`,
           method: 'get'
         }).then(response => {
@@ -93,7 +114,7 @@ const book = {
     },
     loadBookComments({commit}, bookId) {
       return new Promise((resolve, reject) => {
-        axios({
+        request({
           url: `/comment/book?bookId=${bookId}`,
           method: 'get'
         }).then(response => {

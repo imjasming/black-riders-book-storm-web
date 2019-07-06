@@ -98,7 +98,7 @@
             align: 'center'
           },
           {
-            title: '标题',
+            title: '商品信息',
             key: 'title',
             align: 'center'
           },

@@ -1,10 +1,10 @@
 <template>
   <div class="goods-show-info">
     <div class="goods-show-img">
-      <router-link :to="'/goodsDetail?item=' + item.id"><img :src="item.imageUrl"/></router-link>
+      <router-link :to="'/book?id=' + item.id"><img :src="item.imageUrl"/></router-link>
     </div>
     <div class="goods-show-price">
-      <router-link :to="'/goodsDetail?item=' + item.id">
+      <router-link :to="'/book?id=' + item.id">
                   <span>
                     <Icon type="social-yen text-danger"></Icon>
                     <span class="seckill-price text-danger">{{item.price}}</span>
@@ -12,17 +12,17 @@
       </router-link>
     </div>
     <div class="goods-show-detail">
-      <router-link :to="'/goodsDetail?item=' + item.id">
+      <router-link :to="'/book?id=' + item.id">
         <span>{{item.name}}</span>
       </router-link>
     </div>
     <div class="goods-show-num">
-      <router-link :to="'/goodsDetail?item=' + item.id">
+      <router-link :to="'/book?id=' + item.id">
         已有<span>{{item.remarks}}</span>人评价
       </router-link>
     </div>
     <div class="goods-show-seller">
-      <router-link :to="'/goodsDetail?item=' + item.id">
+      <router-link :to="'/book?id=' + item.id">
         <span>{{item.shopName}}</span>
       </router-link>
     </div>

@@ -75,7 +75,6 @@
         const token = this.$store.getters.token
         const userInfo = this.$store.getters.userInfo
         return !!(token && token !== '' && userInfo);
-
       }
 
     }, created() {
