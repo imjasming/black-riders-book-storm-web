@@ -92,7 +92,7 @@ const user = {
         const username = loginForm.username
         const password = loginForm.password
         request({
-          url: `/auth/form/token?username=${username}&password=${password}`,
+          url: `/user/login?username=${username}&password=${password}`,
           method: 'post',
           data: {
             'username': username,
@@ -108,7 +108,7 @@ const user = {
           const token = `${data.tokenType} ${data.value}`
           commit('SET_TOKEN', token)
           commit('SET_USERNAME', username)
-          resolve()
+          resolve(data)
         }).catch(error => {
           reject(error)
         })

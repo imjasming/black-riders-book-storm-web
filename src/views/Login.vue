@@ -11,7 +11,7 @@
             <p>欢迎登录</p>
           </div>
           <div class="form-box">
-            <Form ref="formInline" :model="loginForm" :rules="loginRule">
+            <Form ref="loginForm" :model="loginForm" :rules="loginRule">
               <FormItem prop="username">
                 <i-input type="text" v-model="loginForm.username" clearable size="large" placeholder="用户名">
                   <Icon type="person" slot="prepend"></Icon>
