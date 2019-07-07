@@ -5,15 +5,22 @@
         <img src="static/img/signup-sale.png" alt="">
       </i-col>-->
       <i-col span="8" class="box">
-        <div class="sign-up-title">
-          <h1 align="center" >欢迎注册账号</h1>
-        </div>
+<!--        <div class="sign-up-title">-->
+<!--          <h1 align="center" >欢迎注册账号</h1>-->
+<!--        </div>-->
         <div class="sign-up-step-box">
-            <Steps :current="signUpStep">
+<!--          <div class="sign-up-title">-->
+<!--            <h1 align="center" >欢迎注册账号</h1>-->
+<!--          </div>-->
+          <div class="signup-header">
+            <p>欢迎注册账号</p>
+          </div>
+          <br>
+          <Steps :current="signUpStep">
             <Step title="验证手机号" icon="iphone"></Step>
             <Step title="填写账号信息" icon="person-add"></Step>
             <Step title="注册成功" icon="ios-checkmark-outline"></Step>
-            </Steps>
+          </Steps>
           <div class="sign-up-box">
             <transition mode="out-in">
               <router-view></router-view>
@@ -26,9 +33,6 @@
 </template>
 
 <script>
-  import store from '@/vuex/store';
-  import {mapState, mapMutations} from 'vuex';
-
   export default {
     name: 'SignUp',
     data() {
@@ -37,15 +41,14 @@
       };
     },
     computed: {
-      ...mapState(['signUpStep'])
+      signUpStep() {
+        return this.$store.getters.signUpStep
+      }
     },
-    methods: {
-      ...mapMutations(['SET_SIGN_UP_SETP'])
-    },
-    store,
     mounted() {
-      this.SET_SIGN_UP_SETP(0);
-    }
+      this.$store.dispatch('setNextSignUpStep', 0)
+    },
+    methods: {},
   };
 </script>
 
@@ -56,7 +59,7 @@
 /*    margin: 15px auto;*/
     height: 500px;
 /*    overflow: hidden;*/
-    background: #fff;
+/*    background: #fff;*/
     background-image: url("/static/img/signupbg.png");
     background-size: cover;
     background-position-y: 50%;
@@ -73,26 +76,40 @@
     height: 80%;
   }*/
 
-  .sign-up-title {
-    width: 430px;
-    margin: 15px auto;
-    height: 80px;
-  }
+
 
   .sign-up-step-box {
-    margin: 15px auto;
-    padding-left: 30px;
-    padding-top: 30px;
-    width: 430px;
-    height: 380px;
+    margin: 20px auto;
+    width: 400px;
+    height: 440px;
     border: 2px solid #3CA9C4;
     background-color: #ffffff;
     position: relative;
-    bottom: 30px;
+    left: 200%;
+  }
+
+  .sign-up-title {
+    width: 430px;
+    /*margin: 15px auto;*/
+    height: 80px;
+    position: relative;
+    right: 8%;
+  }
+
+  .signup-header {
+    height: 50px;
+    font-size: 20px;
+    text-align: center;
+    line-height: 50px;
+    letter-spacing: 5px;
+    color: #fff;
+    background-color:#3CA9C4;
   }
 
   .sign-up-box {
-    margin: 30px 25px;
+    margin: 40px auto;
+    position: relative;
+    left: 5%;
     width: 350px;
     display: flex;
     align-items: center;

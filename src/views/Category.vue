@@ -53,10 +53,10 @@
           <div class="goods-list">
             <book-item v-for="(item, index) in orderGoodsList" :product="item" :key="index"></book-item>
           </div>
+          <div class="goods-page">
+            <Page :total="100" show-sizer></Page>
+          </div>
         </div>
-      </div>
-      <div class="goods-page">
-        <Page :total="100" show-sizer></Page>
       </div>
     </div>
     <Spin size="large" fix v-if="isLoading"></Spin>
@@ -69,6 +69,7 @@
   import GoodsClassNav from '@/views/nav/GoodsClassNav';
   import BookItem from '@/components/BookItem'
   import {orderListBy, reverseOrderListBy} from "@/utils/sort";
+  import request from '@/utils/request'
 
   export default {
     name: 'GoodsList',
@@ -97,7 +98,10 @@
         return this.$store.getters.adsItems
       },
       orderGoodsList() {
-        const list = this.$store.getters.goodsList
+        const list = this.$store.getters.goodsList.list
+        if (!list) {
+          return []
+        }
         if (!this.inverseOrder) {
           return orderListBy(list, this.sortOrderBy)
         } else {
@@ -109,16 +113,24 @@
       this.initGoodsList()
     },
     mounted() {
-      this.searchItem = this.$route.query.sreachData;
     },
     methods: {
       initGoodsList() {
         this.isLoading = true
-        this.$store.dispatch('loadGoodsList').then(() => {
+        this.searchItem = this.$route.query.name;
+
+        request.get(`/index/items?name="${this.searchItem}"`).then(response => {
+          const data = response.data.data
+          this.$store.dispatch('setBookList', data)
+          this.isLoading = false
+        }).catch(error => {
+          this.isLoading = false
+        })
+        /*this.$store.dispatch('loadGoodsList').then(() => {
           this.isLoading = false
         }).catch(() => {
           this.isLoading = false
-        })
+        })*/
       },
       orderBy(data, index) {
         this.isLoading = true

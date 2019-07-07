@@ -3,7 +3,7 @@ import store from '../store'
 import {getToken} from '@/utils/auth'
 import Message from 'iview'
 
-export const serverUrl = 'http://172.30.67.240:8080'
+export const serverUrl = 'http://172.30.71.22:8080'
 
 /*request.default.timeout = 16000
 axios.defaults.headers.post['Content-Type'] = 'application/json'
@@ -13,6 +13,9 @@ const request = axios.create({
   baseURL: serverUrl,
   timeout: 16000
 })
+request.defaults.headers.post['Content-Type'] = 'application/json'
+request.defaults.headers.put['Content-Type'] = 'application/json'
+
 // !!!!!!!!!!!!!!!!!!!!!!!
 // 发送多个请求时，由于使用的时自己封装的 axios，以下两函数没有封装进去
 // !!!!!!!!!!!!!!!!!!!!!!

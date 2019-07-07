@@ -3,41 +3,41 @@
     <footer class="footer">
       <div class="clearfix"></div>
       <div class="icon-row">
-        <div class="footer-icon">
-          <h5 class="footer-icon-child"></h5>
-          <span class="footer-icon-text">品类齐全，轻松购物</span>
-        </div>
-        <div class="footer-icon">
-          <h5 class="footer-icon-child footer-icon-child-2"></h5>
-          <span class="footer-icon-text">多仓直发，极速配送</span>
-        </div>
-        <div class="footer-icon">
-          <h5 class="footer-icon-child footer-icon-child-3"></h5>
-          <span class="footer-icon-text">正品行货，精致服务</span>
-        </div>
-        <div class="footer-icon">
-          <h5 class="footer-icon-child footer-icon-child-4"></h5>
-          <span class="footer-icon-text">天天低价，畅选无忧</span>
-        </div>
+<!--        <div class="footer-icon">-->
+<!--          <h5 class="footer-icon-child"></h5>-->
+<!--          <span class="footer-icon-text">品类齐全，轻松购物</span>-->
+<!--        </div>-->
+<!--        <div class="footer-icon">-->
+<!--          <h5 class="footer-icon-child footer-icon-child-2"></h5>-->
+<!--          <span class="footer-icon-text">多仓直发，极速配送</span>-->
+<!--        </div>-->
+<!--        <div class="footer-icon">-->
+<!--          <h5 class="footer-icon-child footer-icon-child-3"></h5>-->
+<!--          <span class="footer-icon-text">正品行货，精致服务</span>-->
+<!--        </div>-->
+<!--        <div class="footer-icon">-->
+<!--          <h5 class="footer-icon-child footer-icon-child-4"></h5>-->
+<!--          <span class="footer-icon-text">天天低价，畅选无忧</span>-->
+<!--        </div>-->
       </div>
       <div class="service-intro">
-        <div class="servece-type">
-          <div class="servece-type-info" v-for="(guide, index) in guideArr" :key="index">
-            <ul>
-              <li v-for="(item, index) in guide" :key="index">{{item}}</li>
-            </ul>
-          </div>
-        </div>
+<!--        <div class="servece-type">-->
+<!--          <div class="servece-type-info" v-for="(guide, index) in guideArr" :key="index">-->
+<!--            <ul>-->
+<!--              <li v-for="(item, index) in guide" :key="index">{{item}}</li>-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--        </div>-->
         <div class="clearfix"></div>
-        <div class="friend-link">
-          <div class="friend-link-item">
-            <ul>
-              <li v-for="(link, index) in moreLink" :key="index">
-                <span :class="[linkItemClass, {'link-last-item': index === 9}]">{{link}}</span>
-              </li>
-            </ul>
-          </div>
-        </div>
+<!--        <div class="friend-link">-->
+<!--          <div class="friend-link-item">-->
+<!--            <ul>-->
+<!--              <li v-for="(link, index) in moreLink" :key="index">-->
+<!--                <span :class="[linkItemClass, {'link-last-item': index === 9}]">{{link}}</span>-->
+<!--              </li>-->
+<!--            </ul>-->
+<!--          </div>-->
+<!--        </div>-->
         <div class="clearfix"></div>
         <div class="copyright">
           <p>Copyright © 2019 by Jasming <a href="https://github.com/PowerDos"><Icon type="social-github"></Icon></a> </p>
@@ -59,9 +59,9 @@ export default {
         [ '支付方式', '货到付款', '在线支付', '分期付款', '邮局汇款', '公司转账' ],
         [ '售后服务', '售后政策', '价格保护', '退款说明', '返修/退换货', '取消订单' ]
       ],
-        // moreLink: [
-        //   '关于我们', '联系我们', '联系客服', '合作招商', '商家帮助', '营销中心', '销售联盟', '校园社区', '风险监测', '隐私政策'
-        // ]
+        moreLink: [
+          '关于我们', '联系我们', '联系客服', '合作招商', '商家帮助', '营销中心', '销售联盟', '校园社区', '风险监测', '隐私政策'
+        ]
     };
   }
 };
@@ -72,7 +72,7 @@ C:/Users/94760/WebstormProjects/black-riders-book-storm-web/node_modules/iview/d
 .footer {
   width: 100%;
   height: 390px;
-  margin-top: 50px;
+  margin-top: 30px;
   background-color: #ffffff;
 }
 
@@ -168,6 +168,7 @@ C:/Users/94760/WebstormProjects/black-riders-book-storm-web/node_modules/iview/d
   border: none;
 }
 .copyright {
+
   width: 100%;
   color: #666;
   line-height: 30px;

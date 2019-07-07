@@ -148,6 +148,9 @@ const portal = {
     }
   },
   actions: {
+    setBookList({commit}, list) {
+      commit('SET_GOODS_LIST', list)
+    },
     setSortOrder({commit}, order) {
       commit('SET_GOODS_ORDER_BY', order)
     },

@@ -74,7 +74,7 @@
   .content {
     width: 1050px;
     margin: 10px auto;
-    border: 1px solid $color-primary;
+    border: 2px solid $color-primary;
   }
 
   .seckill-icon img {

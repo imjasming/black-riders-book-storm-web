@@ -4,9 +4,10 @@
       <!-- 侧边导航 -->
       <div class="nav-side" ref="navSide">
         <ul v-for="(category, index) in categoryList" :key="index">
-          <li @mouseenter="showDetail(category.id)" @mouseleave="hideDetail(category.id)"
-          >
-            <span v-for="(item, index) in category.navTitles" :key="index" class="nav-side-item">{{item + ' '}}</span>/
+          <li @mouseenter="showDetail(index)" @mouseleave="hideDetail(index)">
+            <router-link :to="'/category?name=' + category.name">
+              <span class="nav-side-item">{{category.name}}</span>/
+            </router-link>
           </li>
         </ul>
       </div>
@@ -15,9 +16,9 @@
         <div>
           <Carousel autoplay loop>
             <CarouselItem v-for="(item, index) in marketing.banner" :key="index">
-              <router-link :to="item.targetUrl">
+              <a :href="item.targetUrl">
                 <img :src="item.imgUrl">
-              </router-link>
+              </a>
             </CarouselItem>
           </Carousel>
         </div>
@@ -33,20 +34,12 @@
     <transition name="fade">
       <div class="detail-item-panel panel-1" :duration="{ enter: 100, leave: 100 }"
            v-show="showItemPanel"
-           @mouseenter="showDetail(currentCategory.id)" ref="itemPanel" @mouseleave="hideDetail()">
+           @mouseenter="showDetail(currentShow)" ref="itemPanel" @mouseleave="hideDetail()">
         <div class="nav-detail-item">
-          <span v-for="(item, index) in currentCategory.navTags" :key="index">{{item}} > </span>
+          <span v-for="(item, index) in currentCategory.children" :key="index">
+            <router-link :to="'/category?name=' + item.name">{{item.name}}</router-link>
+          </span>
         </div>
-        <ul>
-          <li v-for="(items, index) in currentCategory.classNav" :key="index" class="detail-item-row">
-            <span class="detail-item-title">{{items.title}}
-              <span class="glyphicon glyphicon-menu-right"></span>
-            </span>
-            <router-link to="/goodsList" v-for="(item, subIndex) in items.tags" :key="subIndex">
-              <span class="detail-item">{{item}}</span>
-            </router-link>
-          </li>
-        </ul>
       </div>
     </transition>
   </div>
@@ -105,7 +98,7 @@
           '全球购',
           '金融'
         ],
-        marketing:{},
+        marketing: {},
       };
     },
     computed: {
@@ -116,15 +109,24 @@
         return this.categoryList[this.currentShow]
       }
     },
+    created() {
+      this.loadCategory()
+      this.loadMarketing()
+    },
     mounted() {
       this.setItemPanel()
-      this.getMarketing()
     },
     updated() {
       this.setItemPanel()
     },
     methods: {
-      getMarketing(){
+      loadCategory() {
+        request('/index/category').then(response => {
+          this.categoryList = response.data.data
+        }).catch(error => {
+        })
+      },
+      loadMarketing() {
         request('/index/marketing').then(response => {
           let t = this.showItemPanel
           this.marketing = response.data.data
@@ -196,6 +198,18 @@
     border: 1px solid $color-primary;
     border-right: none;
     background-color: $color-primary;
+
+    ul {
+      li {
+        a {
+          color: #fff;
+
+          span {
+            color: #fff;
+          }
+        }
+      }
+    }
   }
 
   .nav-side ul {
@@ -212,7 +226,14 @@
 
   .nav-side li:hover {
     background: #fff;
-    color: $color-primary;
+
+    a {
+      color: $color-primary;
+
+      span {
+        color: $color-primary;
+      }
+    }
   }
 
   .nav-side-item:hover {
@@ -270,13 +291,19 @@
     margin-left: 15px;
     font-size: 12px;
     background-color: $color-primary;
-    color: #fff;
+
+    a {
+      color: #fff;
+    }
   }
 
   .nav-detail-item span:hover {
     margin-left: 15px;
     background-color: #fff;
-    color: $color-primary;
+
+    a {
+      color: $color-primary;
+    }
   }
 
   .detail-item-panel ul {

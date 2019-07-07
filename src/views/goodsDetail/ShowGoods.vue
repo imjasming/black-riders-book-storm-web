@@ -5,12 +5,6 @@
         <div class="item-detail-big-img">
           <img :src="bookInfo.imageUrl" alt="">
         </div>
-        <div class="item-detail-img-row">
-          <div class="item-detail-img-small" v-for="(item, index) in bookInfo.imageUrl" :key="index"
-               @mouseover="showBigImg(index)">
-            <img :src="item" alt="">
-          </div>
-        </div>
       </div>
       <div class="item-detail-right">
         <div class="item-detail-title">
@@ -27,7 +21,7 @@
             <router-link :to="'/search/author?query=' + bookInfo.author">{{bookInfo.author}}</router-link>
           </span>
           <span class="book-attr">出版社:
-            <router-link :to="'/search/press?query=' + bookInfo.press">{{bookInfo.author}}</router-link>
+            <router-link :to="'/search/press?query=' + bookInfo.press">{{bookInfo.press}}</router-link>
           </span>
           <span class="book-attr">出版时间:{{bookInfo.publishDate}}</span>
           <div>
@@ -39,7 +33,7 @@
           <div class="item-price-left">
             <div class="item-price-row">
               <p>
-                <span class="item-price-title">B I T 价</span>
+                <span class="item-price-title">售 价</span>
                 <span class="item-price">￥{{price.toFixed(2)}}</span>
               </p>
             </div>
@@ -70,7 +64,7 @@
         <div class="add-buy-car-box">
           <div class="add-buy-car">
             <InputNumber :min="1" v-model="count" size="large"></InputNumber>
-            <Button type="error" size="large" @click="addShoppingCartBtn()">加入购物车</Button>
+            <Button type="info" size="large" @click="addShoppingCartBtn()">加入购物车</Button>
           </div>
         </div>
       </div>
@@ -79,8 +73,7 @@
 </template>
 
 <script>
-  import store from '@/vuex/store';
-  import {mapState, mapActions} from 'vuex';
+  import request from '@/utils/request'
 
   export default {
     name: 'ShowGoods',
@@ -93,7 +86,9 @@
       };
     },
     computed: {
-      ...mapState(['bookInfo']),
+      bookInfo() {
+        return this.$store.getters.bookInfo
+      },
       hirePurchase() {
         const three = this.price * this.count / 3;
         const sex = this.price * this.count / 6;
@@ -123,8 +118,28 @@
         ];
       }
     },
+    created() {
+      this.initBookInfo()
+    },
+    mounted() {
+
+    },
     methods: {
-      ...mapActions(['addShoppingCart']),
+      initBookInfo() {
+        this.$store.dispatch('setIsLoading', true)
+        const bookId = this.$store.getters.bookId
+        request.get(`/bookInfo?id=${bookId}`).then(response => {
+          const data = response.data.data
+          this.$store.dispatch('setBookInfo', data.bookInfo)
+          this.$store.dispatch('setBookStore', data.store)
+          this.price = this.bookInfo.price
+
+          this.$store.dispatch('setIsLoading', false)
+        }).catch(error => {
+          this.$store.dispatch('setIsLoading', false)
+        })
+      },
+
       select(index1, index2) {
         this.selectBoxIndex = index1 * 3 + index2;
         this.price = this.bookInfo.setMeal[index1][index2].price;
@@ -133,27 +148,24 @@
         this.imgIndex = index;
       },
       addShoppingCartBtn() {
-        const index1 = parseInt(this.selectBoxIndex / 3);
-        const index2 = this.selectBoxIndex % 3;
-        const date = new Date();
-        const goodsId = date.getTime();
+        const bookId = this.$store.getters.bookId
         const data = {
-          goods_id: goodsId,
-          title: this.bookInfo.title,
+          bookId: bookId,
           count: this.count,
-          package: this.bookInfo.setMeal[index1][index2]
+          username: '233'
         };
-        this.addShoppingCart(data);
-        this.$router.push('/shoppingCart');
+        request.put(`/user/shoppingCart`, data).then(response => {
+          data.book = this.bookInfo
+          this.$store.dispatch('setNewShoppingCartItem', data)
+          // update shopping cart
+          const _data = response.data.data
+          this.$store.dispatch('setShoppingCartList', _data)
+
+          this.$router.push('/shoppingCart');
+        }).catch(error => {
+        })
       }
     },
-    mounted() {
-      const father = this;
-      setTimeout(() => {
-        father.price = father.bookInfo.setMeal[0][0].price || 0;
-      }, 300);
-    },
-    store
   };
 </script>
 
@@ -232,7 +244,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background-color: #f3f3f3;
+    background-color: #ffffff;
   }
 
   .item-price-left {
@@ -355,12 +367,15 @@
 
   .add-buy-car-box {
     width: 100%;
-    margin-top: 15px;
+    margin-top: 70px;
     border-top: 1px dotted #ccc;
   }
 
   .add-buy-car {
     margin-top: 15px;
+    position: relative;
+    left: 65%;
+    top: 100%;
   }
 
   /******************商品图片及购买详情结束******************/

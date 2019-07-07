@@ -69,6 +69,11 @@
             id: 1,
             path: '/order',
             name: '购物车'
+          },
+          {
+            id: 2,
+            path: '/logout',
+            name: '退出登录'
           }
         ]
       };
@@ -78,7 +83,6 @@
         const token = this.$store.getters.token
         const userInfo = this.$store.getters.userInfo
         return !!(token && token !== '' && userInfo);
-
       }
 
     }, created() {

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <Search></Search>
     <ShopHeader></ShopHeader>
     <GoodsDetailNav></GoodsDetailNav>
     <div class="shop-item-path">
@@ -26,8 +25,6 @@
   import ShopHeader from '@/views/header/ShopHeader';
   import ShowGoods from '@/views/goodsDetail/ShowGoods';
   import ShowGoodsDetail from '@/views/goodsDetail/ShowGoodsDetail';
-  import store from '@/vuex/store';
-  import {mapState, mapActions} from 'vuex';
 
   export default {
     name: 'GoodsDetail',
@@ -35,19 +32,27 @@
       window.scrollTo(0, 0);
       next();
     },
-    created() {
-      this.loadGoodsInfo();
-    },
     data() {
       return {
-        tagsColor: ['blue', 'green', 'red', 'yellow']
+        tagsColor: ['blue', 'green', 'red', 'yellow'],
+        bookId: 0,
       };
     },
-    methods: {
-      ...mapActions(['loadGoodsInfo'])
-    },
     computed: {
-      ...mapState(['goodsInfo', 'isLoading'])
+      isLoading(){
+        return this.$store.getters.isLoading
+      }
+    },
+    created() {
+      this.initBookDetail()
+    },
+    methods: {
+      initBookDetail() {
+        const bookId = this.$route.query.id
+        this.$store.dispatch('setBookId', bookId).then(() => {
+        }).catch(error => {
+        })
+      }
     },
     components: {
       Search,
@@ -56,7 +61,6 @@
       ShowGoods,
       ShowGoodsDetail
     },
-    store
   };
 </script>
 

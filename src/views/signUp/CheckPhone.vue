@@ -19,7 +19,6 @@
 
 <script>
 import store from '@/vuex/store';
-import { mapMutations } from 'vuex';
 export default {
   name: 'CheckPhone',
   data () {
@@ -41,7 +40,6 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(['SET_SIGN_UP_SETP']),
     getcheckNum () {
       if (this.formValidate.phone.length === 11) {
         this.$Message.success({
@@ -58,12 +56,13 @@ export default {
       }
     },
     handleSubmit (name) { // 提交验证
+      const that = this
       this.$refs[name].validate((valid) => {
         if (valid) {
-          this.$router.push({ path: '/SignUp/inputInfo', query: { phone: this.formValidate.phone } });
-          this.SET_SIGN_UP_SETP(1);
+          that.$store.dispatch('setNextSignUpStep', 1)
+          that.$router.push({ path: '/SignUp/inputInfo', query: { phone: this.formValidate.phone } });
         } else {
-          this.$Message.error({
+          that.$Message.error({
             content: '请填写正确的信息',
             duration: 6,
             closable: true

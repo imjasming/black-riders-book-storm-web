@@ -7,10 +7,38 @@ const user = {
     username: getStore('username'),
     token: getToken(),
     userInfo: getStore('userInfo'),
-    trainerList: getStore('trainerList'),
+    shoppingCartList: getStore('shoppingCart'),
+    newShoppingItem: getStore('newShoppingItem')
   },
 
   mutations: {
+    SET_NEW_SHOPPING_ITEM: (state, item) => {
+      state.newShoppingItem = item
+      setStore('newShoppingItem', item)
+    },
+    ADD_SHOPPING_CART: (state, data) => {
+      const item = {
+        bookId: data.bookId,
+        count: data.count,
+        img: data.img,
+        price: data.price,
+        title: data.title
+      };
+      state.shoppingCartList.push(item);
+      //state.newShoppingCart = data;
+    },
+    SET_SHOPPING_CART_LIST: (state, list) => {
+      state.shoppingCartList = list
+      setStore('shoppingCart', list)
+    },
+    ADD_SHOPPING_CART_LIST: (state, list) => {
+      state.shoppingCartList = state.shoppingCartList.concat(list)
+      setStore('shoppingCart', state.shoppingCartList)
+    },
+    ADD_SHOPPING_CART_ITEM: (state, item) => {
+      state.shoppingCartList.push(item)
+      setStore('shoppingCart', state.shoppingCartList)
+    },
     SET_TOKEN: (state, token) => {
       state.token = token
       setToken(token)
@@ -24,27 +52,47 @@ const user = {
       setStore('userInfo', info)
       state.username = state.userInfo.username
     },
-    SET_TRAINER_LIST: (state, list) => {
-      state.trainerList = list
-      setStore('trainerList', list)
-    },
-
   },
 
   actions: {
+    setNewShoppingCartItem({commit}, item){
+      commit('SET_NEW_SHOPPING_ITEM', item)
+    },
+    setShoppingCartList({commit}, list) {
+      return new Promise((resolve, reject) => {
+        commit('SET_SHOPPING_CART_LIST', list);
+      });
+    },
+    addShoppingCart({commit}, data) {
+      return new Promise((resolve, reject) => {
+        commit('ADD_SHOPPING_CART', data);
+      });
+    },
+    loadShoppingCart({commit, state}) {
+      return new Promise((resolve, reject) => {
+        request.get(`/user/${state.username}/shoppingCart`).then(response => {
+          commit('SET_SHOPPING_CART_LIST', response.data.data)
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+    addShoppingCartItem({commit, state}, item) {
+      return new Promise((resolve, reject) => {
+        request.put(`/user/${state.username}/shoppingCart`, item).then(response => {
+          commit('SET_SHOPPING_CART_LIST', response.data.data)
+          resolve()
+        }).catch(error => {
+          reject(error)
+        })
+      })
+    },
+
     initAccessToken({commit}, param) {
       const token = `${param.tokenType} ${param.token}`
       commit('SET_TOKEN', token)
       commit('SET_USERNAME', param.username)
-    },
-
-    isLogin({commit}) {
-      const token = getStore('token')
-      const userInfo = getStore('userInfo')
-      if (token && token !== '' && userInfo) {
-        commit('SET_TOKEN', token)
-        commit('SET_USRE_INFO', userInfo)
-      }
     },
 
     login({commit}, loginForm) {
@@ -52,7 +100,7 @@ const user = {
         const username = loginForm.username
         const password = loginForm.password
         request({
-          url: `/auth/form/token?username=${username}&password=${password}`,
+          url: `/user/login?username=${username}&password=${password}`,
           method: 'post',
           data: {
             'username': username,
@@ -64,31 +112,11 @@ const user = {
             username: 'client', password: 'secret'
           }
         }).then(response => {
-          const data = response.data
-          const token = `${data.tokenType} ${data.value}`
+          const data = response.data.data
+          const token = `${data.tokenHead} ${data.token}`
           commit('SET_TOKEN', token)
           commit('SET_USERNAME', username)
-          resolve()
-        }).catch(error => {
-          reject(error)
-        })
-      })
-    },
-
-    socialBind({commit}, registerForm) {
-      return new Promise((resolve, reject) => {
-        const username = registerForm.username
-        const email = registerForm.email
-        const password = registerForm.password
-        const key = registerForm.key
-        request({
-          url: '/social/bind',
-          method: 'post',
-          data: {
-            username, email, password, key
-          }
-        }).then(data => {
-          resolve(data.data)
+          resolve(data)
         }).catch(error => {
           reject(error)
         })
@@ -97,20 +125,12 @@ const user = {
 
     register({commit}, registerForm) {
       return new Promise((resolve, reject) => {
-        const username = registerForm.username
-        const email = registerForm.email
-        const password = registerForm.password
-
         request({
-          url: '/register',
+          url: '/user/register',
           method: 'post',
-          data: {
-            username,
-            email,
-            password
-          }
-        }).then(() => {
-          resolve()
+          data: registerForm
+        }).then(response => {
+          resolve(response)
         }).catch(error => {
           reject(error)
         })
@@ -128,13 +148,8 @@ const user = {
     },
     initUserData({commit, state}) {
       const username = state.username
-      fetch(`/user/${username}/info`).then(data => {
-        commit('SET_INFO', data)
-      }).catch(error => {
-
-      })
-      fetch(`/user/${username}/trainers`).then(data => {
-        commit('SET_TRAINER_LIST', data)
+      request.get(`/user/${username}/userInfo`).then(data => {
+        commit('SET_INFO', data.data.data)
       }).catch(error => {
 
       })
