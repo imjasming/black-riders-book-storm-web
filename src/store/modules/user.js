@@ -125,10 +125,6 @@ const user = {
 
     register({commit}, registerForm) {
       return new Promise((resolve, reject) => {
-        const username = registerForm.username
-        const email = registerForm.email
-        const password = registerForm.password
-
         request({
           url: '/user/register',
           method: 'post',
