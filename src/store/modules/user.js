@@ -8,10 +8,15 @@ const user = {
     token: getToken(),
     userInfo: getStore('userInfo'),
     shoppingCartList: getStore('shoppingCart'),
-    newShoppingItem: getStore('newShoppingItem')
+    newShoppingItem: getStore('newShoppingItem'),
+    lastOrderId: getStore('lastOrderId')
   },
 
   mutations: {
+    SET_LAST_ORDER_ID: (state, id) => {
+      state.lastOrderId = id
+      setStore('lastOrderId', id)
+    },
     SET_NEW_SHOPPING_ITEM: (state, item) => {
       state.newShoppingItem = item
       setStore('newShoppingItem', item)
@@ -57,6 +62,9 @@ const user = {
   actions: {
     setNewShoppingCartItem({commit}, item) {
       commit('SET_NEW_SHOPPING_ITEM', item)
+    },
+    setNewLastOrderId({commit}, id) {
+      commit('SET_LAST_ORDER_ID', id)
     },
     setShoppingCartList({commit}, list) {
       return new Promise((resolve, reject) => {
@@ -116,7 +124,7 @@ const user = {
           const token = `${data.tokenHead} ${data.token}`
           commit('SET_TOKEN', token)
           commit('SET_USERNAME', username)
-          resolve(data)
+          resolve(response.data)
         }).catch(error => {
           reject(error)
         })

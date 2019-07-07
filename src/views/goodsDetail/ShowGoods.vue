@@ -168,7 +168,7 @@
           const data = {
             bookId: bookId,
             count: this.count,
-            username: '233'
+            username: this.$store.getters.username
           };
           request.put(`/user/shoppingCart`, data).then(response => {
             data.book = this.bookInfo

@@ -43,7 +43,7 @@
             <router-view></router-view>
           </transition>
         </Content>
-        <Footer class="layout-footer-center">2018 &copy; Gavin</Footer>
+        <Footer class="layout-footer-center">2018 &copy; Book Storm</Footer>
       </Layout>
     </Layout>
   </div>

@@ -27,7 +27,7 @@
               <p slot="content">
                 <RadioGroup vertical size="large" @on-change="changeAddress">
                   <Radio :label="item.id" v-for="(item, index) in address" :key="index">
-                    <span>{{item.name}} {{item.province}} {{item.city}} {{item.address}} {{item.phone}} {{item.zipCode}}</span>
+                    <span>{{item.name}} {{item.province}} {{item.city}} {{item.address}} {{item.phone}} {{item.zipCode ? item.zipCode : ''}}</span>
                   </Radio>
                 </RadioGroup>
               </p>
@@ -48,9 +48,9 @@
           <p><span>提交订单应付总额：</span> <span class="money"><Icon type="social-yen"></Icon> {{totalPrice.toFixed(2)}}</span>
           </p>
           <div class="pay-btn">
-            <router-link to="/pay">
-              <Button type="error" size="large">支付订单</Button>
-            </router-link>
+            <!--<router-link to="/pay">-->
+            <Button @click="handlePostOrder" type="error" size="large">支付订单</Button>
+            <!--</router-link>-->
           </div>
         </div>
       </div>
@@ -61,6 +61,7 @@
 <script>
   import Search from '@/views/Search';
   import GoodsListNav from '@/views/nav/GoodsListNav';
+  import request from '@/utils/request'
 
   export default {
     name: 'Order',
@@ -82,13 +83,14 @@
           },
           {
             title: '图片',
-            key: 'book.imageUrl',
+            key: 'imageUrl',
             width: 86,
             render: (h, params) => {
               return h('div', [
                 h('img', {
                   attrs: {
-                    src: params.row.img
+                    src: params.row.imgUrl,
+                    style: 'width:100%'
                   }
                 })
               ]);
@@ -97,38 +99,61 @@
           },
           {
             title: '商品信息',
-            key: 'book.name',
+            key: 'info',
             align: 'center'
           },
           {
             title: '单价',
             width: 198,
-            key: 'book.price',
+            key: 'price',
             align: 'center'
           },
           {
             title: '数量',
-            key: 'count',
+            key: 'mount',
             width: 68,
             align: 'center'
-          }/*,
+          },
           {
             title: '金额',
             width: 68,
-            key: 'price',
+            key: 'totalPrice',
             align: 'center'
-          }*/
+          }
         ],
         checkAddress: {
           name: '未选择',
-          address: '请选择地址'
+          address: '请选择地址',
+          id: 0
         },
         remarks: ''
       };
     },
     computed: {
       shoppingCart() {
-        return this.$store.getters.shoppingCartList
+        const cart = []
+        const shoppingCartList = this.$store.getters.shoppingCartList
+        if (shoppingCartList) {
+          const cartItem = {
+            bookId: 0,
+            storeId: 0,
+            mount: 0,
+            price: 0,
+            bookName: '',
+          }
+          shoppingCartList.forEach(item => {
+            cartItem.bookId = item.bookInfo.id
+            cartItem.storeId = item.bookInfo.storeId
+            cartItem.mount = item.count
+            cartItem.price = item.bookInfo.price
+            cartItem.bookName = item.bookInfo.name
+            cartItem.info = `${item.bookInfo.name} ${item.bookInfo.packStyle}`
+            cartItem.imgUrl = item.bookInfo.imageUrl
+            cartItem.totalPrice = cartItem.mount * cartItem.price
+            cart.push(cartItem)
+          })
+        }
+        return cart
       },
 
       address() {
@@ -138,24 +163,39 @@
       totalPrice() {
         let price = 0;
         this.goodsCheckList.forEach(item => {
-          price += item.book.price * item.count;
+          price += item.price * item.mount;
         });
         return price;
       }
     },
     methods: {
       //...mapActions(['loadAddress']),
+
+      handlePostOrder() {
+        let data = {
+          userId: this.$store.getters.userInfo.id,
+          addressId: this.checkAddress.id,
+          detail: this.goodsCheckList,
+          message: this.remarks
+        }
+
+        request.post('/order/create', data).then(response => {
+          this.$store.dispatch('setNewLastOrderId', response.data.data)
+        }).catch(error => {
+          this.$Message.error(error)
+        })
+      },
       select(selection, row) {
         console.log(selection);
         this.goodsCheckList = selection;
       },
       changeAddress(data) {
-        const shopCart = this.shoppingCart
         const father = this;
         this.address.forEach(item => {
           if (item.id === data) {
             father.checkAddress.name = item.name;
             father.checkAddress.address = `${item.name} ${item.province} ${item.city} ${item.address} ${item.phone} ${item.zipCode}`;
+            father.checkAddress.id = item.id
           }
         });
       }
