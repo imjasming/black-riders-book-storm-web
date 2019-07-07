@@ -116,7 +116,7 @@
           },
           {
             title: '金额',
-            width: 68,
+            width: 198,
             key: 'totalPrice',
             align: 'center'
           }
