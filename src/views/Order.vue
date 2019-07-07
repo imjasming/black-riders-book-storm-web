@@ -84,7 +84,7 @@
           },
           {
             title: '图片',
-            key: 'img',
+            key: 'book.imageUrl',
             width: 86,
             render: (h, params) => {
               return h('div', [
@@ -99,13 +99,13 @@
           },
           {
             title: '商品信息',
-            key: 'title',
+            key: 'book.name',
             align: 'center'
           },
           {
-            title: '套餐',
+            title: '单价',
             width: 198,
-            key: 'package',
+            key: 'book.price',
             align: 'center'
           },
           {
@@ -113,13 +113,13 @@
             key: 'count',
             width: 68,
             align: 'center'
-          },
+          }/*,
           {
-            title: '价格',
+            title: '金额',
             width: 68,
             key: 'price',
             align: 'center'
-          }
+          }*/
         ],
         checkAddress: {
           name: '未选择',
@@ -129,11 +129,14 @@
       };
     },
     computed: {
-      ...mapState(['address', 'shoppingCart']),
+      shoppingCart(){
+        return this.$store.getters.shoppingCartList
+      },
+      ...mapState(['address']),
       totalPrice() {
         let price = 0;
         this.goodsCheckList.forEach(item => {
-          price += item.price * item.count;
+          price += item.book.price * item.count;
         });
         return price;
       }

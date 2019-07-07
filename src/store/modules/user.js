@@ -7,10 +7,15 @@ const user = {
     username: getStore('username'),
     token: getToken(),
     userInfo: getStore('userInfo'),
-    shoppingCartList: getStore('shoppingCart')
+    shoppingCartList: getStore('shoppingCart'),
+    newShoppingItem: getStore('newShoppingItem')
   },
 
   mutations: {
+    SET_NEW_SHOPPING_ITEM: (state, item) => {
+      state.newShoppingItem = item
+      setStore('newShoppingItem', item)
+    },
     ADD_SHOPPING_CART: (state, data) => {
       const item = {
         bookId: data.bookId,
@@ -50,6 +55,9 @@ const user = {
   },
 
   actions: {
+    setNewShoppingCartItem({commit}, item){
+      commit('SET_NEW_SHOPPING_ITEM', item)
+    },
     setShoppingCartList({commit}, list) {
       return new Promise((resolve, reject) => {
         commit('SET_SHOPPING_CART_LIST', list);
@@ -104,8 +112,8 @@ const user = {
             username: 'client', password: 'secret'
           }
         }).then(response => {
-          const data = response.data
-          const token = `${data.tokenType} ${data.value}`
+          const data = response.data.data
+          const token = `${data.tokenHead} ${data.token}`
           commit('SET_TOKEN', token)
           commit('SET_USERNAME', username)
           resolve(data)
@@ -122,15 +130,11 @@ const user = {
         const password = registerForm.password
 
         request({
-          url: '/register',
+          url: '/user/register',
           method: 'post',
-          data: {
-            username,
-            email,
-            password
-          }
-        }).then(() => {
-          resolve()
+          data: registerForm
+        }).then(response => {
+          resolve(response)
         }).catch(error => {
           reject(error)
         })
@@ -148,8 +152,8 @@ const user = {
     },
     initUserData({commit, state}) {
       const username = state.username
-      request.get(`/user/${username}/info`).then(data => {
-        commit('SET_INFO', data)
+      request.get(`/user/${username}/userInfo`).then(data => {
+        commit('SET_INFO', data.data.data)
       }).catch(error => {
 
       })

@@ -155,11 +155,15 @@
           username: '233'
         };
         request.put(`/user/shoppingCart`, data).then(response => {
-          const data = response.data.data
-          this.$store.dispatch('setShoppingCartList', data)
+          data.book = this.bookInfo
+          this.$store.dispatch('setNewShoppingCartItem', data)
+          // update shopping cart
+          const _data = response.data.data
+          this.$store.dispatch('setShoppingCartList', _data)
+
+          this.$router.push('/shoppingCart');
         }).catch(error => {
         })
-        this.$router.push('/shoppingCart');
       }
     },
   };

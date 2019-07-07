@@ -12,11 +12,11 @@
           </div>
           <div class="add-info-box-row">
             <div class="add-info-img">
-              <img :src="newShoppingCart.package.img" alt="">
+              <img :src="newShoppingCart.book.imageUrl" alt="">
             </div>
             <div class="add-info-intro">
-              <p>{{newShoppingCart.title}} {{newShoppingCart.package.intro}}...</p>
-              <p class="add-info-intro-detail">颜色：{{newShoppingCart.package.intro}}/ 数量：{{newShoppingCart.count}}</p>
+              <p>{{newShoppingCart.book.name}}</p> <!--{{newShoppingCart.book.outline}}...-->
+              <p class="add-info-intro-detail">数量：{{newShoppingCart.count}}</p>
             </div>
           </div>
         </div>
@@ -69,8 +69,8 @@
 <script>
   import Search from '@/views/Search';
   import GoodsListNav from '@/views/nav/GoodsListNav';
-  import store from '@/vuex/store';
-  import {mapState, mapActions} from 'vuex';
+  //import store from '@/vuex/store';
+  //import {mapState, mapActions} from 'vuex';
 
   export default {
     name: 'ShoppingCart',
@@ -82,16 +82,19 @@
       this.loadRecommend();
     },
     computed: {
-      ...mapState(['newShoppingCart', 'recommend'])
+      newShoppingCart(){
+        return this.$store.getters.newShoppingItem
+      },
+      //...mapState(['recommend'])
     },
     methods: {
-      ...mapActions(['loadRecommend'])
+      //...mapActions(['loadRecommend'])
     },
     components: {
       Search,
       GoodsListNav
     },
-    store
+    //store
   };
 </script>
 

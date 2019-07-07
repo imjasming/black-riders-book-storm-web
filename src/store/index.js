@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 
 import user from './modules/user'
 import portal from './modules/portal'
-import app from './modules/app'
+import appState from './modules/appState'
 import book from './modules/book'
 import getters from './getters'
 
@@ -13,7 +13,7 @@ const store = new Vuex.Store({
   modules: {
     user,
     portal,
-    app,
+    appState,
     book
   },
   getters

@@ -27,9 +27,6 @@
 </template>
 
 <script>
-  import store from '@/vuex/store';
-  import {mapState, mapMutations} from 'vuex';
-
   export default {
     name: 'SignUp',
     data() {
@@ -38,15 +35,14 @@
       };
     },
     computed: {
-      ...mapState(['signUpStep'])
+      signUpStep() {
+        return this.$store.getters.signUpStep
+      }
     },
-    methods: {
-      ...mapMutations(['SET_SIGN_UP_SETP'])
-    },
-    store,
     mounted() {
-      this.SET_SIGN_UP_SETP(0);
-    }
+      this.$store.dispatch('setNextSignUpStep', 0)
+    },
+    methods: {},
   };
 </script>
 

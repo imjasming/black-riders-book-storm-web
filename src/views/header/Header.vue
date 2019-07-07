@@ -66,6 +66,11 @@
             id: 1,
             path: '/order',
             name: '购物车'
+          },
+          {
+            id: 2,
+            path: '/logout',
+            name: '退出登录'
           }
         ]
       };
