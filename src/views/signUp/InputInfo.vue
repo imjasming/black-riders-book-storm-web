@@ -1,20 +1,19 @@
 <template>
   <div class="info-form">
-    <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80">
-      <FormItem label="用户名" prop="name">
-        <i-input v-model="formValidate.name" clearable size="large" placeholder="请输入你的姓名"></i-input>
-      </FormItem>
-      <FormItem label="邮箱" prop="mail">
-        <i-input v-model="formValidate.mail" clearable size="large" placeholder="请输入你的邮箱"></i-input>
-      </FormItem>
-      <FormItem label="密码" prop="password">
-        <i-input type="password" v-model="formValidate.password" clearable size="large" placeholder="请输入你的密码"></i-input>
-      </FormItem>
-      <FormItem label="确认密码" prop="repassword">
-        <i-input type="password" v-model="formValidate.repassword" clearable size="large"
-                 placeholder="请再次输入你的密码"></i-input>
-      </FormItem>
-      <Button type="error" size="large" long @click="handleSubmit('formValidate')">注册</Button>
+     <Form ref="formValidate" :model="formValidate" :rules="ruleValidate" :label-width="80" >
+        <FormItem label="用户名" prop="name">
+            <i-input v-model="formValidate.name" clearable size="large" placeholder="请输入你的姓名"></i-input>
+        </FormItem>
+        <FormItem label="邮箱" prop="mail">
+            <i-input v-model="formValidate.mail" clearable size="large" placeholder="请输入你的邮箱"></i-input>
+        </FormItem>
+        <FormItem label="密码" prop="password">
+            <i-input type="password" v-model="formValidate.password" clearable size="large" placeholder="请输入你的密码"></i-input>
+        </FormItem>
+        <FormItem label="确认密码" prop="repassword">
+            <i-input type="password" v-model="formValidate.repassword" clearable size="large" placeholder="请再次输入你的密码"></i-input>
+        </FormItem>
+        <Button type="info" size="large" long @click="handleSubmit('formValidate')">注册</Button>
     </Form>
   </div>
 </template>

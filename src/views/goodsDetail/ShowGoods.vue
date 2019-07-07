@@ -64,7 +64,7 @@
         <div class="add-buy-car-box">
           <div class="add-buy-car">
             <InputNumber :min="1" v-model="count" size="large"></InputNumber>
-            <Button type="error" size="large" @click="addShoppingCartBtn()">加入购物车</Button>
+            <Button type="info" size="large" @click="addShoppingCartBtn()">加入购物车</Button>
           </div>
         </div>
       </div>
@@ -261,7 +261,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    background-color: #f3f3f3;
+    background-color: #ffffff;
   }
 
   .item-price-left {
@@ -384,12 +384,15 @@
 
   .add-buy-car-box {
     width: 100%;
-    margin-top: 15px;
+    margin-top: 70px;
     border-top: 1px dotted #ccc;
   }
 
   .add-buy-car {
     margin-top: 15px;
+    position: relative;
+    left: 65%;
+    top: 100%;
   }
 
   /******************商品图片及购买详情结束******************/

@@ -5,7 +5,7 @@ const book = {
   state: {
     bookId: getStore('bookId'),
     bookInfo: {
-      id: '1',
+      id: 'loginbg.png',
       bookImg: [
         'http://img3m1.ddimg.cn/65/14/27864011-1_w_9.jpg',
       ],

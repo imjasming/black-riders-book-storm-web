@@ -21,7 +21,7 @@
 -->
       <div class="item-intro-detail" ref="itemIntroDetail">
         <div class="item-intro-nav item-tabs">
-          <Tabs>
+          <Tabs type="card; border:2px;">
             <!-- <TabPane label="商品介绍">
                <div class="remarks-title">
                  <span>商品介绍</span>
@@ -46,9 +46,9 @@
             </TabPane>-->
             <TabPane label="商品评价">
               <div class="remarks-container">
-                <div class="remarks-title">
-                  <span>商品评价</span>
-                </div>
+<!--                <div class="remarks-title">-->
+<!--                  <span>商品评价</span>-->
+<!--                </div>-->
                 <!--<div class="remarks-analyse-box">
                   <div class="remarks-analyse-goods">
                     <i-circle :percent="goodsInfo.remarks.goodAnalyse" stroke-color="#e4393c">
@@ -88,6 +88,10 @@
                   <Page :total="40" size="small" show-elevator show-sizer></Page>
                 </div>
               </div>
+            </TabPane>
+            <TabPane label="撰写评价" name="name1">
+              <Input type="textarea"rows="7" size="large" v-model="value" placeholder="Enter something..." style="width: 100%" />
+              <Button type="info">提 交</Button>
             </TabPane>
           </Tabs>
         </div>
@@ -156,7 +160,9 @@
   /***************商品详情介绍和推荐侧边栏开始***************/
   .item-intro-show {
     width: 80%;
-    margin: 15px auto;
+    margin-top: 70px;
+    margin-left: 120px;
+    /*margin: 20px auto;*/
     display: flex;
     flex-direction: row;
     background-color: #fff;
@@ -229,9 +235,8 @@
 
   .item-intro-nav {
     width: 100%;
-    /*height: 38px;*/
-    background-color: #F7F7F7;
-    border-bottom: 1px solid #E4393C;
+    background-color: #ffffff;
+    border-bottom: 2px solid #3CA9C4;
   }
 
   .item-intro-nav ul {
@@ -335,6 +340,7 @@
     display: flex;
     flex-direction: row;
     border-bottom: 1px #ccc dotted;
+    border-top: 1px #ccc dotted;
   }
 
   .remarks-user {
@@ -380,11 +386,11 @@
 <style>
   /* 改变便签页样式 */
   .ivu-tabs-ink-bar {
-    background-color: #E4393C !important;
+    background-color: #3CA9C4 !important;
   }
 
   .item-tabs > .ivu-tabs > .ivu-tabs-bar .ivu-tabs-tab {
-    border-radius: 0px;
+    border-radius: 10px;
     color: #999;
     height: 38px;
     background: #F7F7F7;
@@ -392,7 +398,7 @@
 
   .item-tabs > .ivu-tabs > .ivu-tabs-bar .ivu-tabs-tab-active {
     color: #fff;
-    background-color: #E4393C;
+    background-color: #3CA9C4;
   }
 
   .item-tabs > .ivu-tabs > .ivu-tabs-bar .ivu-tabs-tab-active:before {
