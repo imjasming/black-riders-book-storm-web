@@ -82,7 +82,7 @@
     margin: 20px auto;
     width: 400px;
     height: 440px;
-    border: 2px solid #3CA9C4;
+    border: 2px solid #2db7f5;
     background-color: #ffffff;
     position: relative;
     left: 200%;
@@ -103,7 +103,7 @@
     line-height: 50px;
     letter-spacing: 5px;
     color: #fff;
-    background-color:#3CA9C4;
+    background-color:#2db7f5;
   }
 
   .sign-up-box {
