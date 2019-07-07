@@ -13,7 +13,7 @@
         <p><span class="address-content-title">联系电话:</span> {{item.phone}}</p>
         <p><span class="address-content-title">收货地区:</span> {{item.province}} {{item.city}} {{item.district}}</p>
         <p><span class="address-content-title">收货地址:</span> {{item.address}}</p>
-        <p><span class="address-content-title">邮政编码:</span> {{item.zipCode}}</p>
+        <!--<p><span class="address-content-title">邮政编码:</span> {{item.zipCode}}</p>-->
       </div>
     </div>
     <Modal v-model="modal" width="530">

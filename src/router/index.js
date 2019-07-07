@@ -153,19 +153,23 @@ const whiteList = ['/', '/Index', '/category', '/book', '/Login', '/login', '/Si
 router.beforeEach((to, from, next) => {
   // authorized, permit all
   if (getToken()) {
+
     const _store = store
-    if (!store.getters.userInfo || store.getters.userInfo.length === 0) {
-      store.dispatch('initUserData').then(res => { // 拉取用户信息
-        next()
-      }).catch((err) => {
-        store.dispatch('logout').then(() => {
-          iView.Message.error(err || 'Verification failed, please login again')
-          next({path: '/login'})
-        })
+
+    store.dispatch('initUserData').then(res => { // 拉取用户信息
+      next()
+    }).catch((err) => {
+      store.dispatch('logout').then(() => {
+        iView.Message.error(err || 'Verification failed, please login again')
+        next({path: '/login'})
       })
+    })
+
+    /*if (!store.getters.userInfo || store.getters.userInfo.length === 0) {
+
     } else {
       next()
-    }
+    }*/
   } else {// unauthorized
     if (whiteList.indexOf(to.path) === -1) {
       next({
