@@ -89,6 +89,10 @@
       bookInfo() {
         return this.$store.getters.bookInfo
       },
+      isLogin() {
+        const token = this.$store.getters.token
+        return token && token !== ''
+      },
       hirePurchase() {
         const three = this.price * this.count / 3;
         const sex = this.price * this.count / 6;
@@ -148,22 +152,35 @@
         this.imgIndex = index;
       },
       addShoppingCartBtn() {
-        const bookId = this.$store.getters.bookId
-        const data = {
-          bookId: bookId,
-          count: this.count,
-          username: '233'
-        };
-        request.put(`/user/shoppingCart`, data).then(response => {
-          data.book = this.bookInfo
-          this.$store.dispatch('setNewShoppingCartItem', data)
-          // update shopping cart
-          const _data = response.data.data
-          this.$store.dispatch('setShoppingCartList', _data)
+        if (!this.isLogin) {
+          this.$Modal.confirm({
+            title: 'Book Storm',
+            content: '未登录，请先登录',
+            onOk: () => {
+              this.$router.push('/login')
+            },
+            onCancel: () => {
+              this.$Message.info('登录之后才能加入购物车')
+            }
+          });
+        } else {
+          const bookId = this.$store.getters.bookId
+          const data = {
+            bookId: bookId,
+            count: this.count,
+            username: '233'
+          };
+          request.put(`/user/shoppingCart`, data).then(response => {
+            data.book = this.bookInfo
+            this.$store.dispatch('setNewShoppingCartItem', data)
+            // update shopping cart
+            const _data = response.data.data
+            this.$store.dispatch('setShoppingCartList', _data)
 
-          this.$router.push('/shoppingCart');
-        }).catch(error => {
-        })
+            this.$router.push('/shoppingCart');
+          }).catch(error => {
+          })
+        }
       }
     },
   };

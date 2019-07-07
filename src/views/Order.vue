@@ -26,8 +26,8 @@
               选择地址
               <p slot="content">
                 <RadioGroup vertical size="large" @on-change="changeAddress">
-                  <Radio :label="item.addressId" v-for="(item, index) in address" :key="index">
-                    <span>{{item.name}} {{item.province}} {{item.city}} {{item.address}} {{item.phone}} {{item.postalcode}}</span>
+                  <Radio :label="item.id" v-for="(item, index) in address" :key="index">
+                    <span>{{item.name}} {{item.province}} {{item.city}} {{item.address}} {{item.phone}} {{item.zipCode}}</span>
                   </Radio>
                 </RadioGroup>
               </p>
@@ -61,8 +61,6 @@
 <script>
   import Search from '@/views/Search';
   import GoodsListNav from '@/views/nav/GoodsListNav';
-  import store from '@/vuex/store';
-  import {mapState, mapActions} from 'vuex';
 
   export default {
     name: 'Order',
@@ -71,7 +69,7 @@
       next();
     },
     created() {
-      this.loadAddress();
+      //this.loadAddress();
     },
     data() {
       return {
@@ -129,10 +127,14 @@
       };
     },
     computed: {
-      shoppingCart(){
+      shoppingCart() {
         return this.$store.getters.shoppingCartList
       },
-      ...mapState(['address']),
+
+      address() {
+        return this.$store.getters.address
+      },
+      // ...mapState(['address']),
       totalPrice() {
         let price = 0;
         this.goodsCheckList.forEach(item => {
@@ -142,17 +144,18 @@
       }
     },
     methods: {
-      ...mapActions(['loadAddress']),
+      //...mapActions(['loadAddress']),
       select(selection, row) {
         console.log(selection);
         this.goodsCheckList = selection;
       },
       changeAddress(data) {
+        const shopCart = this.shoppingCart
         const father = this;
         this.address.forEach(item => {
-          if (item.addressId === data) {
+          if (item.id === data) {
             father.checkAddress.name = item.name;
-            father.checkAddress.address = `${item.name} ${item.province} ${item.city} ${item.address} ${item.phone} ${item.postalcode}`;
+            father.checkAddress.address = `${item.name} ${item.province} ${item.city} ${item.address} ${item.phone} ${item.zipCode}`;
           }
         });
       }
@@ -166,7 +169,6 @@
       Search,
       GoodsListNav
     },
-    store
   };
 </script>
 

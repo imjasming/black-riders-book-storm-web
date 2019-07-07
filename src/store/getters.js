@@ -5,6 +5,7 @@ const getters = {
   userInfo: state => state.user.userInfo,
   shoppingCartList: state => state.user.shoppingCartList,
   newShoppingItem: state => state.user.newShoppingItem,
+  address: state => state.user.userInfo.addressList,
   marketing: state => state.portal.marketing,
   categoryList: state => state.portal.categoryList,
   indexContents: state => state.portal.indexContents,

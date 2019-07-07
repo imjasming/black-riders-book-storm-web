@@ -55,7 +55,7 @@ const user = {
   },
 
   actions: {
-    setNewShoppingCartItem({commit}, item){
+    setNewShoppingCartItem({commit}, item) {
       commit('SET_NEW_SHOPPING_ITEM', item)
     },
     setShoppingCartList({commit}, list) {
@@ -148,8 +148,14 @@ const user = {
     },
     initUserData({commit, state}) {
       const username = state.username
-      request.get(`/user/${username}/userInfo`).then(data => {
+      request.get(`/user/info?username=${username}`).then(data => {
         commit('SET_INFO', data.data.data)
+
+        // load shopping cart
+        request.get(`/user/${state.username}/shoppingCart`).then(response => {
+          commit('SET_SHOPPING_CART_LIST', response.data.data)
+        }).catch(error => {
+        })
       }).catch(error => {
 
       })
