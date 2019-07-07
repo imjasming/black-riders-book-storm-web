@@ -49,7 +49,7 @@
           </p>
           <div class="pay-btn">
             <!--<router-link to="/pay">-->
-            <Button @click="handlePostOrder" type="error" size="large">支付订单</Button>
+            <Button @click="handlePostOrder" type="error" size="large" :disabled="infoCompleted">支付订单</Button>
             <!--</router-link>-->
           </div>
         </div>
@@ -124,7 +124,7 @@
         checkAddress: {
           name: '未选择',
           address: '请选择地址',
-          id: 0
+          id: -1
         },
         remarks: ''
       };
@@ -159,7 +159,9 @@
       address() {
         return this.$store.getters.address
       },
-      // ...mapState(['address']),
+      infoCompleted() {
+        return this.checkAddress.id === -1 || this.goodsCheckList.length === 0
+      },
       totalPrice() {
         let price = 0;
         this.goodsCheckList.forEach(item => {
@@ -169,8 +171,6 @@
       }
     },
     methods: {
-      //...mapActions(['loadAddress']),
-
       handlePostOrder() {
         let data = {
           userId: this.$store.getters.userInfo.id,
@@ -181,6 +181,7 @@
 
         request.post('/order/create', data).then(response => {
           this.$store.dispatch('setNewLastOrderId', response.data.data)
+          this.$router.push('/pay')
         }).catch(error => {
           this.$Message.error(error)
         })

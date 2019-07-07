@@ -64,14 +64,9 @@ request.interceptors.response.use(
         })
       } else {
       }
-      errorMsg = error.response.data
+      //errorMsg = error.response.data
     }
-    this.$Message({
-      message: errorMsg,
-      type: 'error',
-      duration: 8 * 1000
-    })
-    return Promise.reject(error)
+    return Promise.reject(error.response.data.error)
   }
 )
 

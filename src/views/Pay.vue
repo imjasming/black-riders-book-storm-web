@@ -23,7 +23,12 @@
 
 <script>
   export default {
-    name: 'Pay'
+    name: 'Pay',
+    data() {
+      return {
+        orderId: this.$store.getters.lastOrderId
+      }
+    }
   };
 </script>
 
