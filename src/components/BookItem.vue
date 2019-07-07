@@ -88,6 +88,10 @@
   .goods-show-detail {
     font-size: 12px;
     margin: 6px 0px;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 4;
 
     span {
       color: $color-font-normal;

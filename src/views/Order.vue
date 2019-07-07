@@ -134,14 +134,9 @@
         const cart = []
         const shoppingCartList = this.$store.getters.shoppingCartList
         if (shoppingCartList) {
-          const cartItem = {
-            bookId: 0,
-            storeId: 0,
-            mount: 0,
-            price: 0,
-            bookName: '',
-          }
+
           shoppingCartList.forEach(item => {
+            let cartItem = {}
             cartItem.bookId = item.bookInfo.id
             cartItem.storeId = item.bookInfo.storeId
             cartItem.mount = item.count
