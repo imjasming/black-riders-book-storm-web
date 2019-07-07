@@ -2,10 +2,10 @@
   <!-- 登录页面 -->
   <div>
     <Row class="container">
-      <i-col span="13" offset="2" class="login-img-box">
+<!--      <i-col span="13" offset="2" class="login-img-box">
         <img src="static/img/sale.jpg" alt="">
-      </i-col>
-      <i-col span="7" class="login-box">
+      </i-col>-->
+        <i-col span="7" class="login-box" >
         <div class="login-container">
           <div class="login-header">
             <p>欢迎登录</p>
@@ -13,22 +13,23 @@
           <div class="form-box">
             <Form ref="loginForm" :model="loginForm" :rules="loginRule">
               <FormItem prop="username">
-                <i-input type="text" v-model="loginForm.username" clearable size="large" placeholder="用户名">
+                <i-input type="text" v-model="loginForm.username" clearable size="large" placeholder="用户名" icon="md-person">
                   <Icon type="person" slot="prepend"></Icon>
                 </i-input>
               </FormItem>
               <FormItem prop="password">
-                <i-input type="password" v-model="loginForm.password" clearable size="large" placeholder="密码">
+                <i-input type="password" v-model="loginForm.password" clearable size="large" placeholder="密码" icon="md-key">
                   <Icon type="ios-locked-outline" slot="prepend"></Icon>
                 </i-input>
               </FormItem>
+              <br>
               <FormItem>
-                <Button type="error" size="large" @click.native.prevent="handleSubmit('formInline')" long>登录</Button>
+                <Button type="info" shape="circle" size="large" @click.native.prevent="handleSubmit('formInline')" long >登 录</Button>
               </FormItem>
             </Form>
           </div>
           <div class="login-link">
-            <router-link to="SignUp">注册</router-link>
+            <Button type="info" shape="circle" size="small" to="SignUp" ghost>注 册</Button>
           </div>
         </div>
       </i-col>
@@ -83,33 +84,39 @@
   @import "../style/index";
 
   .container {
-    margin-top: 30px;
+/*    margin-top: 30px;*/
     height: 485px;
     background-color: #fff;
+    background-image: url("/static/img/loginbg.png");
+    background-size: cover;
+    background-position-y: 50%;
   }
 
-  .login-img-box {
+/*  .login-img-box {
     height: 485px;
     overflow: hidden;
     display: flex;
     align-items: center;
     justify-content: center;
-  }
+  }*/
 
-  .login-img-box > img {
+/*  .login-img-box > img {
     width: 68%;
-  }
+  }*/
 
   .login-box {
     height: 485px;
     display: flex;
     align-items: center;
     justify-content: center;
+    position: relative;
+    left: 70%;
   }
 
   .login-container {
     width: 80%;
-    border: #ED3F14 solid 1px;
+    border: #3CA9C4 solid 2px;
+    background: #ffffff;
   }
 
   .login-header {
@@ -119,7 +126,7 @@
     line-height: 50px;
     letter-spacing: 5px;
     color: #fff;
-    background-color: #ED3F14;
+    background-color:#3CA9C4;
   }
 
   .form-box {

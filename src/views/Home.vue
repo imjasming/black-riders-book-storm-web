@@ -16,7 +16,7 @@
               <Icon type="location"></Icon>
               <span>收货地址</span>
             </template>
-            <MenuItem name="myAddress">我的收货地址</MenuItem>
+            <MenuItem name="myAddress" >我的收货地址</MenuItem>
             <MenuItem name="addAddress">添加收货地址</MenuItem>
           </Submenu>
           <Submenu name="2">
@@ -105,8 +105,8 @@
   }
 
   .content {
-    margin: 15px;
-    background-color: #fff;
+/*    margin: 15px;*/
+    background-color: #ffffff;
     padding: 15px;
   }
 
