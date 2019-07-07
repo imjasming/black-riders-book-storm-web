@@ -2,6 +2,7 @@
   <div class="container">
     <p><Icon type="ios-checkmark-outline"></Icon></p>
     <router-link to="/login"><Button type="success" size="large" long class="btn-success">注册成功</Button></router-link>
+
   </div>
 </template>
 

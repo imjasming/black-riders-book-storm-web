@@ -4,7 +4,7 @@ import axios from "@/utils/request";
 const book = {
   state: {
     bookInfo: {
-      id: '1',
+      id: 'loginbg.png',
       bookImg: [
         'http://img3m1.ddimg.cn/65/14/27864011-1_w_9.jpg',
       ],

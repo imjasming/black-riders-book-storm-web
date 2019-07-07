@@ -1,15 +1,18 @@
 <template>
   <div class="info-form">
     <Form ref="formValidate" :model="formValidate" :label-width="80" :rules="ruleValidate">
-      <FormItem label="手机号" prop="phone">
-          <i-input v-model="formValidate.phone" clearable size="large"  placeholder="请输入手机号"></i-input>
+      <br>
+      <FormItem label="手机号" prop="phone" >
+          <i-input v-model="formValidate.phone" clearable size="large"  placeholder="请输入手机号" icon="ios-phone-portrait"></i-input>
       </FormItem>
+      <br>
       <FormItem label="验证码" prop="checkNum">
           <i-input v-model="formValidate.checkNum" size="large"  placeholder="请输入验证码">
             <Button slot="append" @click="getcheckNum">获取验证码</Button>
           </i-input>
       </FormItem>
-      <Button type="error" size="large" long @click="handleSubmit('formValidate')">验证手机号</Button>
+      <br><br>
+      <Button type="info" size="large" long @click="handleSubmit('formValidate')" >验证手机号</Button>
     </Form>
   </div>
 </template>

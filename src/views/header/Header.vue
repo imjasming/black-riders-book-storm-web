@@ -5,16 +5,17 @@
         <router-link to="/">
           <div class="logo-container">
             <div class="logo-img">
-              <img src="../../assets/logo.png"/>
+              <img src="static/img/logo.png"/>
             </div>
-            <div class="logo-content">
-              <p>{{appName}}</p>
+            <div class="logo-content" >
+<!--              <p style="color: #2c2c2c">{{appName}}</p>-->
+              <p><span style="color: #2c2c2c" >{{frontName}}</span> <span style="color: #2347ff" >{{backName}}</span> </p>
             </div>
           </div>
         </router-link>
       </div>
-      <Form ref="searchForm" :model="searchForm" inline>
-        <Input type="text" v-model="searchForm.query" placeholder="搜索图书"></Input>
+      <Form ref="searchForm" :model="searchForm" inline >
+        <Input type="text" v-model="searchForm.query" placeholder="想找什么书，快搜搜看" size="large" icon="ios-search" style="width: 400px"></Input>
       </Form>
       <div>
         <Dropdown v-if="isLogin">
@@ -34,7 +35,7 @@
           </DropdownMenu>
         </Dropdown>
         <div v-else class="header-link">
-          <router-link to="login">cnm，请登录</router-link>
+          <router-link to="login">您好，请登录</router-link>
           |
           <router-link to="SignUp">注册</router-link>
         </div>
@@ -52,7 +53,9 @@
         searchForm: {
           query: ''
         },
-        appName: 'BOOK STORM',
+        appName: 'BlACK-RIDER BOOK STORM',
+        frontName:'BLACK-RIDER',
+        backName:'BOOK STORM',
         messageCount: 0,
         userAvatar: require('../../assets/avatar.png'),
         fixHeader: '',

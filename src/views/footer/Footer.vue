@@ -40,7 +40,7 @@
         </div>
         <div class="clearfix"></div>
         <div class="copyright">
-          <p>Copyright © 2018 by Gavin <a href="https://github.com/PowerDos"><Icon type="social-github"></Icon></a> <span>本项目仅供学习参考</span></p>
+          <p>Copyright © 2019 by Jasming <a href="https://github.com/PowerDos"><Icon type="social-github"></Icon></a> </p>
         </div>
       </div>
     </footer>
@@ -59,22 +59,23 @@ export default {
         [ '支付方式', '货到付款', '在线支付', '分期付款', '邮局汇款', '公司转账' ],
         [ '售后服务', '售后政策', '价格保护', '退款说明', '返修/退换货', '取消订单' ]
       ],
-      moreLink: [
-        '关于我们', '联系我们', '联系客服', '合作招商', '商家帮助', '营销中心', '销售联盟', '校园社区', '风险监测', '隐私政策'
-      ]
+        // moreLink: [
+        //   '关于我们', '联系我们', '联系客服', '合作招商', '商家帮助', '营销中心', '销售联盟', '校园社区', '风险监测', '隐私政策'
+        // ]
     };
   }
 };
 </script>
-
+C:/Users/94760/WebstormProjects/black-riders-book-storm-web/node_modules/iview/dist/styles/iview.css
 <style scoped>
 /*****************************底 部 开 始*****************************/
 .footer {
   width: 100%;
   height: 390px;
   margin-top: 50px;
-  background-color: #eaeaea;
+  background-color: #ffffff;
 }
+
 .icon-row {
   margin: 15px auto;
   padding-top: 8px;
