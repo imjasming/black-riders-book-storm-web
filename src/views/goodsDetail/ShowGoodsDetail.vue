@@ -21,7 +21,7 @@
 -->
       <div class="item-intro-detail" ref="itemIntroDetail">
         <div class="item-intro-nav item-tabs">
-          <Tabs type="card; border:2px;">
+          <Tabs type="card" style="border:2px;">
             <!-- <TabPane label="商品介绍">
                <div class="remarks-title">
                  <span>商品介绍</span>
@@ -46,9 +46,9 @@
             </TabPane>-->
             <TabPane label="商品评价">
               <div class="remarks-container">
-<!--                <div class="remarks-title">-->
-<!--                  <span>商品评价</span>-->
-<!--                </div>-->
+                <!--                <div class="remarks-title">-->
+                <!--                  <span>商品评价</span>-->
+                <!--                </div>-->
                 <!--<div class="remarks-analyse-box">
                   <div class="remarks-analyse-goods">
                     <i-circle :percent="goodsInfo.remarks.goodAnalyse" stroke-color="#e4393c">
@@ -90,7 +90,8 @@
               </div>
             </TabPane>
             <TabPane label="撰写评价" name="name1">
-              <Input type="textarea"rows="7" size="large" v-model="value" placeholder="Enter something..." style="width: 100%" />
+              <Input type="textarea" :rows="7" size="large" v-model="commentForm" placeholder="Enter something..."
+                     style="width: 100%"/>
               <Button type="info">提 交</Button>
             </TabPane>
           </Tabs>
@@ -108,7 +109,8 @@
     name: 'ShowGoodsDetail',
     data() {
       return {
-        tagsColor: ['blue', 'green', 'red', 'yellow']
+        tagsColor: ['blue', 'green', 'red', 'yellow'],
+        commentForm: '',
       };
     },
     computed: {

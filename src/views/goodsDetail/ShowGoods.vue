@@ -91,7 +91,8 @@
       },
       isLogin() {
         const token = this.$store.getters.token
-        return token && token !== ''
+        const username = this.$store.getters.username
+        return token && token !== '' && username && username !== ''
       },
       hirePurchase() {
         const three = this.price * this.count / 3;
@@ -179,6 +180,7 @@
 
             this.$router.push('/shoppingCart');
           }).catch(error => {
+            this.$Message.error(error)
           })
         }
       }
