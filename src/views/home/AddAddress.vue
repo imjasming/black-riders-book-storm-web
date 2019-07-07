@@ -68,7 +68,8 @@
     methods: {
       handleAddAddress() {
         const data = {
-          userId: this.$store.userInfo.id,
+          username: this.$store.getters.username,
+          userId: this.$store.getters.userInfo.id,
           address: this.formData.address,
           city: this.formData.city,
           district: this.formData.area,
@@ -79,6 +80,7 @@
         }
         request.post('/user/address', data).then(response => {
           // TODO:
+          this.$store.dispatch('setUserInfo', response.data.data)
           this.$Message.success('添加成功！')
         }).catch(error => {
           this.$Message.error(error)

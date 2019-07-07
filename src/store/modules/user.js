@@ -60,6 +60,9 @@ const user = {
   },
 
   actions: {
+    setUserInfo({commit}, info) {
+      commit('SET_INFO', info)
+    },
     setNewShoppingCartItem({commit}, item) {
       commit('SET_NEW_SHOPPING_ITEM', item)
     },

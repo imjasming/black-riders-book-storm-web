@@ -1,10 +1,10 @@
 <template>
   <div>
-    <div class="address-box" v-for="(item, index) in address" :key="item.id">
+    <div class="address-box" v-for="(item, index) in address" :key="index">
       <div class="address-header">
         <span>{{item.name}}</span>
         <div class="address-action">
-          <span @click="edit(item.id)"><Icon type="edit"></Icon> 修改</span>
+          <span @click="edit(index)"><Icon type="edit"></Icon> 修改</span>
           <span @click="del(item.id)"><Icon type="trash-a"></Icon> 删除</span>
         </div>
       </div>
@@ -101,25 +101,26 @@
         this.formData.phone = this.address[index].phone;
         this.formData.zipCode = this.address[index].zipCode;
 
-        this.formData.userId = this.$store.getters.userInfo.id
-        request.put('/user/address', this.formData).then(response => {
-          // TODO
-          this.$Message.success('更新成功！')
-        }).catch(error => {
-          this.$Message.error(error)
-        })
+        this.formData.id = this.address[index].id;
       },
       editAction() {
-        this.modal = false;
-        this.$Message.success('修改成功');
+        this.formData.userId = this.$store.getters.userInfo.id
+        request.put('/user/address', this.formData).then(response => {
+          this.$store.dispatch('setUserInfo', response.data.data)
+          this.$Message.success('更新成功！')
+          this.modal = false;
+        }).catch(error => {
+          this.$Message.error(error)
+          this.modal = false;
+        })
       },
       del(index) {
         this.$Modal.confirm({
           title: '信息提醒',
           content: '你确定删除这个收货地址',
           onOk: () => {
-            request.delete(`/user/address?userId=${this.$store.getters.userInfo.id}&&addressId=${index}`).then(response=>{
-              //TODO
+            request.delete(`/user/address?userId=${this.$store.getters.userInfo.id}&&addressId=${index}`).then(response => {
+              this.$store.dispatch('setUserInfo', response.data.data)
               this.$Message.success('删除成功');
             }).catch(error => {
               this.$Message.error(error)

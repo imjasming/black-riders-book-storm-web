@@ -6,9 +6,10 @@
         <Menu active-name="1-2" theme="light" width="auto" @on-select="onSelect">
           <div class="user-icon">
             <div class="user-img">
-              <img src="static/img/head.png">
+              <img v-if="(!avatar && avatar !== '')" :src="avatar">
+              <Avatar v-else>{{username}}</Avatar>
             </div>
-            <p>Gavin</p>
+            <p>{{username}}</p>
           </div>
           <Submenu name="1">
             <template slot="title">
@@ -60,7 +61,9 @@
           'addAddress': '添加收货地址',
           'myOrder': '我的订单',
           'myShoppingCart': '我的购物车'
-        }
+        },
+        avatar: this.$store.getters.userInfo.avatar,
+        username: this.$store.getters.username
       };
     },
     methods: {
