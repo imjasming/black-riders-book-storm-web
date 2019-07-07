@@ -153,6 +153,7 @@ const whiteList = ['/', '/Index', '/category', '/book', '/Login', '/login', '/Si
 router.beforeEach((to, from, next) => {
   // authorized, permit all
   if (getToken()) {
+    const _store = store
     if (!store.getters.userInfo || store.getters.userInfo.length === 0) {
       store.dispatch('initUserData').then(res => { // 拉取用户信息
         next()

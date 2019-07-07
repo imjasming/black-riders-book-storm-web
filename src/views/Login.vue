@@ -64,7 +64,7 @@
         this.$refs.loginForm.validate((valid) => {
           if (valid) {
             this.$store.dispatch('login', this.loginForm).then(result => {
-              if (result) {
+              if (result.code === 200) {
                 this.$Message.success('登录成功');
                 this.$router.push('/');
               } else {

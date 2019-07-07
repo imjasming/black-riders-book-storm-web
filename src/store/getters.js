@@ -1,10 +1,12 @@
 const getters = {
   isLoading: state => state.appState.isLoading,
   signUpStep: state => state.appState.signUpStep,
+  username: state => state.user.username,
   token: state => state.user.token,
   userInfo: state => state.user.userInfo,
   shoppingCartList: state => state.user.shoppingCartList,
   newShoppingItem: state => state.user.newShoppingItem,
+  address: state => state.user.userInfo.addressList,
   marketing: state => state.portal.marketing,
   categoryList: state => state.portal.categoryList,
   indexContents: state => state.portal.indexContents,
