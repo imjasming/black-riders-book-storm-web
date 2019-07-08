@@ -7,11 +7,11 @@
           <i class="fa fa-fire"></i>
         </div>
         <div class="shop-title-content">
-          <p>
-            <router-link to="/merchant">{{ storeInfo.shopName }}</router-link>
+          <p style="">
+            <router-link to="/merchant">{{ storeInfo.storeName }}</router-link>
           </p>
           <p>
-            <router-link to="/merchant">{{ storeInfo.position }}</router-link>
+            <router-link to="/merchant">{{ storeInfo.storePosition }}</router-link>
           </p>
         </div>
       </div>
@@ -46,12 +46,15 @@
   };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import "../../style/index";
+
   /* 店铺介绍 */
   .shop-box {
     width: 100%;
     height: 120px;
-    background-color: #484848;
+    //background-color: #484848;
+    background-image: linear-gradient(to right, #4867c0, $color-primary, #4867c0);
   }
 
   .shop-container {

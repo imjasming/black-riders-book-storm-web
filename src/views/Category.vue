@@ -9,14 +9,14 @@
             <Icon type="ios-home-outline"></Icon>
             首页
           </BreadcrumbItem>
-          <BreadcrumbItem to="/goodsList?sreachData=">
+          <BreadcrumbItem :to="'/category?name=' + searchItem">
             <Icon type="bag"></Icon>
             {{searchItem}}
           </BreadcrumbItem>
         </Breadcrumb>
       </div>
       <!-- 商品标签导航 -->
-      <GoodsClassNav></GoodsClassNav>
+      <GoodsClassNav :query="searchItem"></GoodsClassNav>
       <!-- 商品展示容器 -->
       <div class="goods-box">
         <div class="as-box">

@@ -133,7 +133,7 @@
       initBookInfo() {
         this.$store.dispatch('setIsLoading', true)
         const bookId = this.$store.getters.bookId
-        request.get(`/bookInfo?id=${bookId}`).then(response => {
+        request.get(`/book?id=${bookId}`).then(response => {
           const data = response.data.data
           this.$store.dispatch('setBookInfo', data.bookInfo)
           this.$store.dispatch('setBookStore', data.store)

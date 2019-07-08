@@ -10,6 +10,13 @@
             </router-link>
           </li>
         </ul>
+        <ul>
+          <li>
+            <router-link to="/category?name=all">
+              <span class="nav-side-item">全部分类</span>
+            </router-link>
+          </li>
+        </ul>
       </div>
       <div class="nav-content">
         <!-- 幻灯片 -->
@@ -66,9 +73,9 @@
       currentCategory() {
         if (this.categoryList.length > 0) {
           return this.categoryList[this.currentShow]
-        }else {
+        } else {
           return {
-            children:[]
+            children: []
           }
         }
       }
@@ -86,7 +93,7 @@
     methods: {
       loadCategory() {
         request('/index/category').then(response => {
-          this.categoryList = response.data.data
+          this.categoryList = response.data.data.list
         }).catch(error => {
           this.$Message.error({
             content: error

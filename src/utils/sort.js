@@ -18,10 +18,12 @@ const reverseCompare = property => {
 
 // 获取排序后的列表
 export const orderListBy = (list, order) => {
-  return list.sort(compare(order));
+  const l = list.sort(compare(order))
+  return l;
 };
 
 // get reverse order list
 export const reverseOrderListBy = (list, order) => {
-  return list.sort(reverseCompare(order));
+  const l = list.sort(reverseCompare(order))
+  return l
 };

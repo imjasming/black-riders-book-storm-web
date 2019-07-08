@@ -32,9 +32,17 @@
   import ShopHeader from '@/views/header/ShopHeader';
   import store from '@/vuex/store';
   import {mapGetters, mapActions} from 'vuex';
+  import request from '@/utils/request'
 
   export default {
     name: 'Merchant',
+    data(){
+      return {
+        bookList:[],
+        pageNum:0,
+        pageSize:0
+      }
+    },
     created() {
       this.loadGoodsList();
     },
@@ -42,7 +50,14 @@
       ...mapGetters(['orderListBy'])
     },
     methods: {
-      ...mapActions(['loadGoodsList'])
+      ...mapActions(['loadGoodsList']),
+      loadStoreBook(){
+        request.get(`/book/store?storeId=${this.store.storeInfo.id}`).then(response => {
+          this.bookList = response.data.data.list
+          this.pageNum = response.data.data.pageNum
+          this.pageSize = response.data.data.pageSize
+        })
+      }
     },
     components: {
       ShopHeader

@@ -23,7 +23,7 @@
     </div>
     <div class="goods-show-seller">
       <router-link :to="'/book?id=' + item.id">
-        <span>{{item.shopName}}</span>
+        <span>{{item.press}}</span>
       </router-link>
     </div>
   </div>
@@ -86,6 +86,7 @@
   }
 
   .goods-show-detail {
+    height: 4.5rem;
     font-size: 12px;
     margin: 6px 0px;
     overflow: hidden;
