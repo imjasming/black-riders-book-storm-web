@@ -8,12 +8,11 @@
 </template>
 
 <script>
-import store from '@/vuex/store';
-import { mapState, mapActions } from 'vuex';
 export default {
   name: 'MyShoppingCart',
   data () {
     return {
+      goodsCheckList: [],
       columns: [
         {
           type: 'selection',
@@ -22,13 +21,14 @@ export default {
         },
         {
           title: '图片',
-          key: 'img',
+          key: 'imageUrl',
           width: 86,
           render: (h, params) => {
             return h('div', [
               h('img', {
                 attrs: {
-                  src: params.row.img
+                  src: params.row.imgUrl,
+                  style: 'width:100%'
                 }
               })
             ]);
@@ -36,44 +36,61 @@ export default {
           align: 'center'
         },
         {
-          title: '标题',
-          key: 'title',
+          title: '商品信息',
+          key: 'info',
           align: 'center'
         },
         {
-          title: '套餐',
+          title: '单价',
           width: 198,
-          key: 'package',
+          key: 'price',
           align: 'center'
         },
         {
           title: '数量',
-          key: 'count',
+          key: 'mount',
           width: 68,
           align: 'center'
         },
         {
-          title: '价格',
-          width: 68,
-          key: 'price',
+          title: '金额',
+          width: 198,
+          key: 'totalPrice',
           align: 'center'
         }
-      ]
+      ],
     };
   },
   created () {
-    this.loadShoppingCart();
+    this.$store.dispatch('loadShoppingCart')
   },
   computed: {
-    ...mapState(['shoppingCart'])
+    shoppingCart() {
+      const cart = []
+      const shoppingCartList = this.$store.getters.shoppingCartList
+      if (shoppingCartList) {
+
+        shoppingCartList.forEach(item => {
+          let cartItem = {}
+          cartItem.bookId = item.bookInfo.id
+          cartItem.storeId = item.bookInfo.storeId
+          cartItem.mount = item.count
+          cartItem.price = item.bookInfo.price
+          cartItem.bookName = item.bookInfo.name
+          cartItem.info = `${item.bookInfo.name} ${item.bookInfo.packStyle}`
+          cartItem.imgUrl = item.bookInfo.imageUrl
+          cartItem.totalPrice = cartItem.mount * cartItem.price
+          cart.push(cartItem)
+        })
+      }
+      return cart
+    },
   },
   methods: {
-    ...mapActions(['loadShoppingCart']),
     goTo () {
       this.$router.push('/order');
     }
   },
-  store
 };
 </script>
 

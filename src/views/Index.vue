@@ -42,7 +42,9 @@
         request.get('/index/contents').then(response => {
           this.indexContents = response.data.data
         }).catch(error => {
-
+          this.$Message.error({
+            content: error,
+          })
         })
       },
       checkData() {

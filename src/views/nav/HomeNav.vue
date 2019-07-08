@@ -55,49 +55,7 @@
       return {
         showItemPanel: false,
         currentShow: 0,
-        categoryList: [
-          {
-            id: 0,
-            navTitles: ["手机", "数码"],
-            navTags: ['清洁用品', '美妆商城', '美妆馆', '妆比社', '全球购美妆', '宠物馆'],
-            classNav: [
-              {
-                title: '面部护肤',
-                tags: ['补水保湿', '卸妆', '洁面', '爽肤水', '乳液面霜', '精华', '眼霜', '防晒', '面膜', '剃须', '套装']
-              },
-              {
-                title: '洗发护发',
-                tags: ['洗发', '护发', '染发', '造型', '假发', '美发工具', '套装']
-              }
-            ]
-          },
-          {
-            id: 1,
-            navTitles: ["电脑", "办公"],
-            navTags: ['赛事', '运动城', '户外馆', '健身房', '骑行馆', '钟表城'],
-            classNav: [
-              {
-                title: '2017新品',
-                tags: ['休闲鞋', '商务休闲鞋', '正装鞋', '帆布鞋', '凉鞋', '拖鞋', '功能鞋', '增高鞋', '工装鞋', '雨鞋']
-              },
-              {
-                title: '运动鞋包',
-                tags: ['跑步鞋', '休闲鞋', '篮球鞋', '帆布鞋', '板鞋', '拖鞋', '运动包']
-              }
-            ]
-          }
-        ],
-        nav: [
-          '秒杀',
-          '优惠券',
-          '闪购',
-          '拍卖',
-          '服装城',
-          '超市',
-          '生鲜',
-          '全球购',
-          '金融'
-        ],
+        categoryList: [],
         marketing: {},
       };
     },
@@ -106,7 +64,13 @@
         return this.$store.getters.marketing
       },*/
       currentCategory() {
-        return this.categoryList[this.currentShow]
+        if (this.categoryList.length > 0) {
+          return this.categoryList[this.currentShow]
+        }else {
+          return {
+            children:[]
+          }
+        }
       }
     },
     created() {
@@ -124,6 +88,9 @@
         request('/index/category').then(response => {
           this.categoryList = response.data.data
         }).catch(error => {
+          this.$Message.error({
+            content: error
+          })
         })
       },
       loadMarketing() {
@@ -131,6 +98,9 @@
           let t = this.showItemPanel
           this.marketing = response.data.data
         }).catch(error => {
+          this.$Message.error({
+            content: error
+          })
         })
       },
       showDetail(index) {

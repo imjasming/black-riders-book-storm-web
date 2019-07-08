@@ -3,7 +3,7 @@ import store from '../store'
 import {getToken} from '@/utils/auth'
 import Message from 'iview'
 
-export const serverUrl = 'http://172.30.71.22:8080'
+export const serverUrl = 'http://172.30.71.254:8080'
 
 /*request.default.timeout = 16000
 axios.defaults.headers.post['Content-Type'] = 'application/json'
@@ -47,7 +47,6 @@ request.interceptors.response.use(
     return response
   },
   error => {
-    let errorMsg = error.message
     if (error.response) {
       const code = error.response.status
       console.log(code + ', ' + error)// for debug
@@ -65,8 +64,10 @@ request.interceptors.response.use(
       } else {
       }
       //errorMsg = error.response.data
+      return Promise.reject(error.response.data.error)
+    } else {
+      return Promise.reject(error)
     }
-    return Promise.reject(error.response.data.error)
   }
 )
 
