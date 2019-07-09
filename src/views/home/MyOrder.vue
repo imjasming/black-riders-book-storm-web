@@ -1,37 +1,32 @@
 <template>
   <div>
-    <Tabs value="name1" type="card">
-      <TabPane label="未支付订单" name="name1">
-        <Table border :columns="columns" :data="order1" size="large" no-data-text="你还没有订单，快去购物吧">
+    <Tabs :value="currentPane" type="card">
+      <TabPane :label="pane.title" :name="pane.title" v-for="(pane, i) in orderPanel" :key="i"
+               @click="setCurrentIndex(i)">
+        <Table border :columns="columns" :data="pane.orders" size="large" no-data-text="你还没有订单，快去购物吧">
           <template slot-scope="{ row, index }" slot="orderId">
-            <span :src="row.orderId"></span>
+            <span>{{row.orderId}}</span>
           </template>
-          <template slot-scope="{ row, index }" slot="imgUrl">
+          <template slot-scope="{ row, index }" slot="imageUrl">
             <div>
-              <img :src="row.imgUrl">
+              <img :src="row.imageUrl">
             </div>
           </template>
           <template slot-scope="{ row, index }" slot="bookName">
-            <span :src="row.bookName"></span>
+            <span>{{row.bookName}}</span>
           </template>
           <template slot-scope="{ row, index }" slot="mount">
-            <span :src="row.mount"></span>
+            <span>{{row.mount}}</span>
           </template>
           <template slot-scope="{ row, index }" slot="totalPrice">
-            <span :src="row.totalPrice"></span>
+            <span>{{row.totalPrice}}</span>
           </template>
         </Table>
-      </TabPane>
-      <TabPane label="未完成订单" name="name2">
-        <Table border :columns="columns" :data="order2" size="large" no-data-text="你还没有订单，快去购物吧"></Table>
-      </TabPane>
-      <TabPane label="已完成订单" name="name3">
-        <Table border :columns="columns" :data="order3" size="large" no-data-text="你还没有订单，快去购物吧"></Table>
       </TabPane>
     </Tabs>
 
     <div class="page-size">
-      <Page :total="100" show-sizer></Page>
+      <Page :total="pageTotal" show-sizer></Page>
     </div>
   </div>
 
@@ -43,70 +38,7 @@
     name: 'MyOrder',
     data() {
       return {
-        order1: [{
-          order_id: 1529931938150,
-          goods_id: 1529931938150,
-          count: 1,
-          img: 'static/img/goodsDetail/pack/1.jpg',
-          package: '4.7英寸-深邃蓝',
-          price: 28,
-          title: 'xxxxx',
-          createAt: '2018-06-06 20:06:08'
-        },
-          {
-            order_id: 1529931938150,
-            goods_id: 1529931938150,
-            count: 1,
-            img: 'static/img/goodsDetail/pack/1.jpg',
-            package: '4.7英寸-深邃蓝',
-            price: 28,
-            title: 'xxxxx',
-            createAt: '2018-06-06 20:06:08'
-          }
-        ],
-        order2: [{
-          order_id: 1529931938150,
-          goods_id: 1529931938150,
-          count: 1,
-          img: 'static/img/goodsDetail/pack/1.jpg',
-          package: '4.7英寸-深邃蓝',
-          price: 28,
-          title: 'xxxxx',
-          createAt: '2018-06-06 20:06:08'
-        },
-          {
-            order_id: 1529931938150,
-            goods_id: 1529931938150,
-            count: 1,
-            img: 'static/img/goodsDetail/pack/1.jpg',
-            package: '4.7英寸-深邃蓝',
-            price: 28,
-            title: 'xxxxx',
-            createAt: '2018-06-06 20:06:08'
-          }
-        ],
-        order3: [
-          {
-            order_id: 1529931938150,
-            goods_id: 1529931938150,
-            count: 1,
-            img: 'static/img/goodsDetail/pack/1.jpg',
-            package: '4.7英寸-深邃蓝',
-            price: 28,
-            title: 'xxxxx',
-            createAt: '2018-06-06 20:06:08'
-          },
-          {
-            order_id: 1529931938150,
-            goods_id: 1529931938150,
-            count: 1,
-            img: 'static/img/goodsDetail/pack/1.jpg',
-            package: '4.7英寸-深邃蓝',
-            price: 28,
-            title: 'xxxxx',
-            createAt: '2018-06-06 20:06:08'
-          }
-        ],
+        currentPane: "未支付",
         columns: [
           {
             title: '订单编号',
@@ -114,7 +46,7 @@
           },
           {
             title: '图片',
-            slot: 'imgUrl'
+            slot: 'imageUrl'
           },
           {
             title: '图书信息',
@@ -143,18 +75,23 @@
             orders: []
           },
         ],
-        orderList: []
+        orderList: [],
       }
     },
     created() {
       this.loadMyOrderList()
     },
-    computed: {},
+    computed: {
+      pageTotal() {
+        const index = {"未支付": 0, "未完成": 1, "已完成": 2}
+        return this.orderPanel[index[this.currentPane]].orders.length
+      }
+    },
     methods: {
       loadMyOrderList() {
         const username = this.$store.getters.username
         request.get(`/order/user?username=${username}`).then(response => {
-          this.orderList = response.data.data
+          this.orderList = response.data.data.list
           this.computeShowOrder()
         }).catch(error => {
           this.$Message.error({
@@ -168,6 +105,12 @@
             this.orderPanel[parseInt(item.status)].orders.push(item)
           })
         }
+        console.log(this.orderPanel)
+      },
+      setCurrentIndex(index) {
+        //this.currentPane = index
+        this.pageTotal = this.orderPanel[index].orders.length
+        console.log(index)
       }
     }
   };
