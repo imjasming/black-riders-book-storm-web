@@ -29,6 +29,9 @@
                   <Radio :label="item.id" v-for="(item, index) in address" :key="index">
                     <span>{{item.name}} {{item.province}} {{item.city}} {{item.address}} {{item.phone}} {{item.zipCode ? item.zipCode : ''}}</span>
                   </Radio>
+                  <span>
+                    您还没有添加地址，
+                  <router-link to="/home/addAddress" v-if="address.length === 0">点击此处添加地址</router-link></span>
                 </RadioGroup>
               </p>
             </Panel>
