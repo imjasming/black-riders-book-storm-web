@@ -32,14 +32,7 @@ const book = {
       content: '.。。。。。。。。。',
       remarksNum: 0, // 评论数
     },
-    storeInfo: {
-      storeId: 0,
-      phoneNumber: '',
-      storeName: '',
-      created: '',
-      updated: '',
-      storePosition: ''
-    },
+    storeInfo: getStore('storeInfo'),
     comments: [
       {
         commentId: 0,

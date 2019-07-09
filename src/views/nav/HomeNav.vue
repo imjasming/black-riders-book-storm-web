@@ -43,8 +43,8 @@
            v-show="showItemPanel"
            @mouseenter="showDetail(currentShow)" ref="itemPanel" @mouseleave="hideDetail()">
         <div class="nav-detail-item">
-          <span v-for="(item, index) in currentCategory.children" :key="index">
-            <router-link :to="'/category?name=' + item.name">{{item.name}}</router-link>
+          <span v-for="(item, index) in currentCategory" :key="index">
+            <router-link :to="'/category?name=' + item">{{item}}</router-link>
           </span>
         </div>
       </div>
@@ -63,20 +63,16 @@
         showItemPanel: false,
         currentShow: 0,
         categoryList: [],
+        cateChildrenList: [],
         marketing: {},
       };
     },
     computed: {
-      /*marketing(){
-        return this.$store.getters.marketing
-      },*/
       currentCategory() {
         if (this.categoryList.length > 0) {
-          return this.categoryList[this.currentShow]
+          return this.cateChildrenList[this.currentShow]
         } else {
-          return {
-            children: []
-          }
+          return []
         }
       }
     },
@@ -92,8 +88,20 @@
     },
     methods: {
       loadCategory() {
-        request('/index/category').then(response => {
-          this.categoryList = response.data.data.list
+        request('/index/category?pageSize=294&pageNum=0').then(response => {
+          const categoryList = response.data.data.list
+          let that = this
+          let i = 0
+          let children = []
+          categoryList.forEach(item => {
+            item.children.forEach(child => {
+              children.push([])
+              children[i].push(child.name)
+            })
+            i++
+          })
+          this.categoryList = categoryList.slice(0, 10)
+          this.cateChildrenList = children
         }).catch(error => {
           this.$Message.error({
             content: error
@@ -164,6 +172,7 @@
     width: 1050px;
     height: 440px;
     margin: 0px auto;
+    background-color: #fff;
   }
 
   .nav-side {
@@ -245,7 +254,7 @@
   /*显示商品详细信息*/
   .detail-item-panel {
     width: 815px;
-    height: 485px;
+    height: 440px;
     background-color: #fff;
     position: absolute;
     top: 168px;
@@ -264,8 +273,10 @@
   }
 
   .nav-detail-item span {
+    display: inline-block;
     padding: 6px 6px 6px 12px;
     margin-left: 15px;
+    margin-top: 15px;
     font-size: 12px;
     background-color: $color-primary;
 

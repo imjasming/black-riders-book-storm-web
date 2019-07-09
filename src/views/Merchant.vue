@@ -3,26 +3,10 @@
     <ShopHeader></ShopHeader>
     <div class="goods-container">
       <div class="goods-list">
-        <div class="goods-show-info" v-for="(item, index) in orderListBy" :key="index">
-          <div class="goods-show-img">
-            <router-link to="/goodsDetail"><img :src="item.img"/></router-link>
-          </div>
-          <div class="goods-show-price">
-            <span>
-              <Icon type="social-yen text-danger"></Icon>
-              <span class="seckill-price text-danger">{{item.price}}</span>
-            </span>
-          </div>
-          <div class="goods-show-detail">
-            <span>{{item.intro}}</span>
-          </div>
-          <div class="goods-show-num">
-            已有<span>{{item.remarks}}</span>人评价
-          </div>
-        </div>
+        <book-item v-for="(item, index) in bookList" :key="index" :product="item"></book-item>
       </div>
       <div class="goods-page">
-        <Page :total="100" show-sizer></Page>
+        <Page :total="pageSize" show-sizer></Page>
       </div>
     </div>
   </div>
@@ -30,8 +14,8 @@
 
 <script>
   import ShopHeader from '@/views/header/ShopHeader';
-  import store from '@/vuex/store';
   import request from '@/utils/request'
+  import BookItem from '@/components/BookItem'
 
   export default {
     name: 'Merchant',
@@ -46,11 +30,10 @@
       this.loadStoreBook()
     },
     computed: {
-      ...mapGetters(['orderListBy'])
     },
     methods: {
       loadStoreBook(){
-        request.get(`/book/store?storeId=${this.store.storeInfo.id}`).then(response => {
+        request.get(`/book/store?storeId=${this.$store.getters.storeInfo.id}`).then(response => {
           this.bookList = response.data.data.list
           this.pageNum = response.data.data.pageNum
           this.pageSize = response.data.data.pageSize
@@ -58,9 +41,9 @@
       }
     },
     components: {
-      ShopHeader
+      ShopHeader,
+      BookItem
     },
-    store
   };
 </script>
 

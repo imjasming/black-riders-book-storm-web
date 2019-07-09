@@ -8,7 +8,7 @@
             <span>{{row.orderId}}</span>
           </template>
           <template slot-scope="{ row, index }" slot="imageUrl">
-            <div>
+            <div class="img-container">
               <img :src="row.imageUrl">
             </div>
           </template>
@@ -116,11 +116,18 @@
   };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .page-size {
     margin: 15px 0px;
     display: flex;
     justify-content: flex-end;
     align-items: center;
+  }
+  .img-container{
+    padding: 10%;
+
+    img{
+      width: 100%;
+    }
   }
 </style>

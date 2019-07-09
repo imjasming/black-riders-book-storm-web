@@ -110,34 +110,6 @@
         const username = this.$store.getters.username
         return token && token !== '' && username && username !== ''
       },
-      hirePurchase() {
-        const three = this.price * this.count / 3;
-        const sex = this.price * this.count / 6;
-        const twelve = this.price * this.count / 12 * 1.0025;
-        const twentyFour = this.price * this.count / 24 * 1.005;
-        return [
-          {
-            tooltip: '无手续费',
-            type: '不分期'
-          },
-          {
-            tooltip: '无手续费',
-            type: `￥${three.toFixed(2)} x 3期`
-          },
-          {
-            tooltip: '无手续费',
-            type: `￥${sex.toFixed(2)} x 6期`
-          },
-          {
-            tooltip: '含手续费：费率0.25%起，￥0.1起×12期',
-            type: `￥${twelve.toFixed(2)} x 12期`
-          },
-          {
-            tooltip: '含手续费：费率0.5%起，￥0.1起×12期',
-            type: `￥${twentyFour.toFixed(2)} x 24期`
-          }
-        ];
-      }
     },
     created() {
       this.initBookInfo()

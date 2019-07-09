@@ -1,49 +1,26 @@
 <template>
   <div>
     <div class="item-intro-show">
-      <!--<div class="item-intro-recommend">
-        <div class="item-recommend-title">
-          <p>店铺热销</p>
-        </div>
-        <div class="item-intro-recommend-column">
-          <div class="item-recommend-column" v-for="(item, index) in goodsInfo.hot" :key="index">
-            <div class="item-recommend-img">
-              <img :src="item.img" alt="">
-            </div>
-            <div class="item-recommend-intro">
-              <span>
-                <span class="item-recommend-top-num">{{index + 1}}</span> 热销{{item.sale}}件</span>
-              <span class="item-recommend-price">￥{{item.price.toFixed(2)}}</span>
-            </div>
-          </div>
-        </div>
-      </div>
--->
       <div class="item-intro-detail" ref="itemIntroDetail">
         <div class="item-intro-nav item-tabs">
           <Tabs type="card" style="border:2px;">
-            <!-- <TabPane label="商品介绍">
-               <div class="remarks-title">
-                 <span>商品介绍</span>
-               </div>
-               <div class="item-intro-img" ref="itemIntroGoods">
-                 <img :src="item" alt="" v-for="(item,index) in goodsInfo.goodsDetail" :key="index">
-               </div>
-             </TabPane>-->
-            <!--<TabPane label="规格参数">
+
+            <TabPane label="图书详情">
               <div class="remarks-title">
-                <span>规格参数</span>
+                <span>图书详情</span>
               </div>
               <div class="item-param-container">
-                <span class="item-param-box" v-for="(item,index) in goodsInfo.param" :key="index">
-                  <span class="item-param-title">{{item.title}}: </span>
-                  <span class="item-param-content">{{item.content}}</span>
-                </span>
+                <p>书名：{{bookInfo.name}}</p>
+                <p>概述：{{bookInfo.outline}}</p>
+                <p>定价：{{bookInfo.marketPrice}}</p>
+                <p>作者：{{bookInfo.author}}</p>
+                <p>出版社：{{bookInfo.press}}</p>
+                <p>出版日期：{{bookInfo.publishDate}}</p>
+                <p>ISBN：{{bookInfo.isbn}}</p>
+                <p>装帧：{{bookInfo.packStyle}}</p>
+                <p>开本：{{bookInfo.size}}</p>
               </div>
-            </TabPane>-->
-            <!--<TabPane label="售后保障">
-              <ShowProductWarranty></ShowProductWarranty>
-            </TabPane>-->
+            </TabPane>
             <TabPane label="商品评价">
               <div class="remarks-container">
                 <div class="remarks-box" v-for="(item,index) in comments" :key="index">
@@ -166,7 +143,7 @@
   };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   /***************商品详情介绍和推荐侧边栏开始***************/
   .item-intro-show {
     width: 80%;
@@ -219,10 +196,16 @@
 
   /************* 商品参数 *************/
   .item-param-container {
-    display: flex;
-    flex-wrap: wrap;
+    display: block;
+    /*flex-wrap: wrap;
     flex-direction: row;
-    justify-content: space-between;
+    justify-content: space-between;*/
+
+    p{
+      display: block;
+      line-height: 1.4;
+      margin: 1.12em 0
+    }
   }
 
   .item-param-box {

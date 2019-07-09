@@ -18,7 +18,7 @@
     </div>
     <div class="goods-show-num">
       <router-link :to="'/book?id=' + product.id">
-        已有<span>{{remarks}}</span>人评价
+        销量 <span>{{product.dealMount}}</span>
       </router-link>
     </div>
     <div class="goods-show-seller">

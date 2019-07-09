@@ -22,14 +22,6 @@
     data() {
       return {
         tagsInfo: [
-          /*{
-            tagName: '品牌',
-            tags: [ '华为(HUAWEI)', '三星(SAMSUNG)', 'MATE', '摩斯维(msvii)', 'OPPO', '莫凡(Mofi)', '耐尔金(NILLKIN)', '洛克(ROCK)', '亿色(ESR)', 'Apple', '优加' ]
-          },
-          {
-            tagName: '手机配件',
-            tags: [ '手机保护套', '苹果周边', '手机贴膜', '移动电源', '创意配件', '手机耳机', '手机支架' ]
-          },*/
           {
             tagName: '分类',
             tags: []
@@ -48,7 +40,6 @@
       loadCategory() {
         request('/index/category?pageSize=294&pageNum=0').then(response => {
           const categoryList = response.data.data.list
-          //this.tagsInfo[0] = categoryList
           let that = this
           categoryList.forEach(item => {
             that.tagsInfo[0].tags.push(item.name)

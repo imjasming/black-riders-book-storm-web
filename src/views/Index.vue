@@ -125,7 +125,7 @@
     width: 100%;
     background-color: #fff;
     margin-top: 8px;
-    border: 2px solid $color-primary;
+    border: 1px solid $color-primary;
   }
 
   .item-class-head {

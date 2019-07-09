@@ -132,11 +132,6 @@
         }).catch(error => {
           this.isLoading = false
         })
-        /*this.$store.dispatch('loadGoodsList').then(() => {
-          this.isLoading = false
-        }).catch(() => {
-          this.isLoading = false
-        })*/
       },
       orderBy(data, index) {
         this.isLoading = true
