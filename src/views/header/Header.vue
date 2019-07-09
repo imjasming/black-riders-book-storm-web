@@ -9,7 +9,7 @@
             </div>
             <div class="logo-content" >
 <!--              <p style="color: #2c2c2c">{{appName}}</p>-->
-              <p><span style="color: #2c2c2c" >{{frontName}}</span> <span style="color: #2347ff" >{{backName}}</span> </p>
+              <p><span style="color: #2c2c2c" >{{frontName}}</span> <span class="logo-right" >{{backName}}</span> </p>
             </div>
           </div>
         </router-link>
@@ -19,6 +19,7 @@
       </Form>
       <div>
         <Dropdown v-if="isLogin">
+          <span>欢迎，{{username}}</span>
           <Badge :count="messageCount" v-if="messageCount > 0">
             <Avatar :src="userAvatar"></Avatar>
           </Badge>
@@ -75,7 +76,8 @@
             path: '/logout',
             name: '退出登录'
           }
-        ]
+        ],
+        username: this.$store.getters.username
       };
     },
     computed: {
@@ -107,6 +109,9 @@
 <style lang="scss" scoped>
   $color-primary: #409EFF;
 
+  .logo-right{
+    color: $color-primary
+  }
   .header-link {
     a {
       margin: 0 4px;
@@ -131,8 +136,8 @@
   }
 
   .logo-container {
-    height: 40px;
-    font-size: 1.4rem;
+    /*height: 40px;*/
+    font-size: 1.6rem;
     display: flex;
     flex-direction: row;
     align-items: start;
@@ -153,7 +158,7 @@
 
   .box {
     width: 100%;
-    height: 40px;
+    height: 50px;
     background-color: #fff;
     z-index: 999;
     box-shadow: 0 0 8px #000;
@@ -162,6 +167,7 @@
   .nav {
     margin: 0 auto;
     width: 90%;
+    height: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-around;

@@ -23,6 +23,7 @@ const MyAddress = resolve => require(['@/views/home/MyAddress'], resolve);
 const AddAddress = resolve => require(['@/views/home/AddAddress'], resolve);
 const MyOrder = resolve => require(['@/views/home/MyOrder'], resolve);
 const MyShoppingCart = resolve => require(['@/views/home/MyShoppingCart'], resolve);
+const Info = resolve => require(['@/views/home/UserInfo'], resolve);
 const Merchant = resolve => require(['@/views/Merchant'], resolve);
 const Logout = resolve => require(['@/views/Logout'], resolve);
 const Layout = resolve => require(['@/components/Layout'], resolve);
@@ -138,6 +139,11 @@ const router = new VueRouter({
           path: 'myShoppingCart',
           name: 'MyShoppingCart',
           component: MyShoppingCart
+        },
+        {
+          path:'info',
+          name:'Info',
+          component: Info
         }
       ]
     },
@@ -145,7 +151,7 @@ const router = new VueRouter({
       path: '/merchant',
       name: 'Merchant',
       component: Merchant
-    }
+    },
   ]
 })
 

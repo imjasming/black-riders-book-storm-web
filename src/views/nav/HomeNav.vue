@@ -21,7 +21,7 @@
       <div class="nav-content">
         <!-- 幻灯片 -->
         <div>
-          <Carousel autoplay loop>
+          <Carousel autoplay :autoplay-speed="3000" loop :height="440">
             <CarouselItem v-for="(item, index) in marketing.banner" :key="index">
               <a :href="item.targetUrl">
                 <img :src="item.imgUrl">
@@ -29,13 +29,6 @@
             </CarouselItem>
           </Carousel>
         </div>
-        <!--<div class="nav-show">
-          <div class="nav-show-img" v-for="(item, index) in marketing.activities" :key="index">
-            <router-link :to="item.targetUrl">
-              <img :src="item.imgUrl">
-            </router-link>
-          </div>
-        </div>-->
       </div>
     </div>
     <transition name="fade">
@@ -140,6 +133,14 @@
 <style lang="scss" scoped>
   $color-primary: #409EFF;
 
+  div.ivu-carousel-item {
+    a {
+      img {
+        height: 100%;
+      }
+    }
+  }
+
   .nav-item {
     width: 680px;
     height: 36px;
@@ -176,7 +177,7 @@
   }
 
   .nav-side {
-    width: 200px;
+    width: 230px;
     height: 100%;
     padding: 0px;
     color: #fff;

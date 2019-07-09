@@ -43,6 +43,6 @@
 
   .main{
     position: relative;
-    top: 50px;
+    top: 60px;
   }
 </style>

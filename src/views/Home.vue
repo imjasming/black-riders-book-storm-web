@@ -6,17 +6,24 @@
         <Menu active-name="1-2" theme="light" width="auto" @on-select="onSelect">
           <div class="user-icon">
             <div class="user-img">
-              <img v-if="(!avatar && avatar !== '')" :src="avatar">
-              <Avatar v-else>{{username}}</Avatar>
+              <img v-if="hasAvatar" :src="avatar">
+              <img v-else :src="userAvatar">
             </div>
             <p>{{username}}</p>
           </div>
+          <Submenu name="0">
+            <template slot="title">
+              <Icon type="location"></Icon>
+              <span>个人中心</span>
+            </template>
+            <MenuItem name="info">个人资料</MenuItem>
+          </Submenu>
           <Submenu name="1">
             <template slot="title">
               <Icon type="location"></Icon>
               <span>收货地址</span>
             </template>
-            <MenuItem name="myAddress" >我的收货地址</MenuItem>
+            <MenuItem name="myAddress">我的收货地址</MenuItem>
             <MenuItem name="addAddress">添加收货地址</MenuItem>
           </Submenu>
           <Submenu name="2">
@@ -60,11 +67,18 @@
           'myAddress': '我的收货地址',
           'addAddress': '添加收货地址',
           'myOrder': '我的订单',
-          'myShoppingCart': '我的购物车'
+          'myShoppingCart': '我的购物车',
+          'info': '个人资料'
         },
+        userAvatar: require('../assets/avatar.png'),
         avatar: this.$store.getters.userInfo.avatar,
         username: this.$store.getters.username
       };
+    },
+    computed: {
+      hasAvatar() {
+        return this.avatar && this.avatar !== ''
+      }
     },
     methods: {
       onSelect(name) {
@@ -75,7 +89,7 @@
   };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   .side-bar a {
     color: #232323;
   }
@@ -97,7 +111,21 @@
     width: 96px;
     height: 96px;
     border-radius: 48px;
+    border: 1px solid #d4d6db;
     overflow: hidden;
+  }
+
+  div .user-img {
+    span {
+      img {
+        height: 100%;
+      }
+
+      span {
+        height: 100%;
+        width: 100%;
+      }
+    }
   }
 
   .user-img img {
@@ -105,7 +133,7 @@
   }
 
   .content {
-/*    margin: 15px;*/
+    /*    margin: 15px;*/
     background-color: #ffffff;
     padding: 15px;
   }
@@ -115,4 +143,5 @@
     padding-bottom: 15px;
     text-align: center;
   }
+
 </style>
