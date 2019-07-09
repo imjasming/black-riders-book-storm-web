@@ -51,19 +51,32 @@
               </p>
             </div>
           </div>
-          <div class="item-price-right">
-            <div class="item-remarks-sum">
-              <p>累计评价</p>
-              <p>
-                <span class="item-remarks-num">{{remarks}} 条</span>
-              </p>
-            </div>
+        </div>
+        <div class="item-stat">
+          <div class="item-stat-child">
+            <p>累计评价</p>
+            <p>
+              <span class="item-stat-num">{{remarks}} 条</span>
+            </p>
+          </div>
+          <div class="item-stat-child">
+            <p>销量</p>
+            <p>
+              <span class="item-stat-num">{{bookInfo.dealMount}}</span>
+            </p>
           </div>
         </div>
-        <br>
         <div class="add-buy-car-box">
           <div class="add-buy-car">
-            <InputNumber :min="1" v-model="count" size="large"></InputNumber>
+            <div style="display: flex">
+              <InputNumber :min="1" :max="bookInfo.storeMount" v-model="count" size="large"></InputNumber>
+              <div class="">
+                <p>库存</p>
+                <p>
+                  <span class="item-stat-num">{{bookInfo.storeMount}} 条</span>
+                </p>
+              </div>
+            </div>
             <Button type="info" size="large" @click="addShoppingCartBtn()">加入购物车</Button>
           </div>
         </div>
@@ -192,7 +205,7 @@
   };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
   /******************商品图片及购买详情开始******************/
   .item-detail-show {
     width: 80%;
@@ -301,70 +314,31 @@
     cursor: pointer;
   }
 
-  .item-remarks-sum {
+  .item-stat {
+    padding: 10px 10% 10px 0;
+    border: 1px dotted #c9c9c9;
+    border-width: 1px 0;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+  }
+
+  .item-stat-child {
+    flex: 1;
     padding-left: 8px;
     border-left: 1px solid #ccc;
   }
 
-  .item-remarks-sum p {
+  .item-stat-child p {
     color: #999999;
     font-size: 12px;
     line-height: 10px;
     text-align: center;
   }
 
-  .item-remarks-num {
+  .item-stat-num {
     line-height: 18px;
     color: #005eb7;
-  }
-
-  .item-select {
-    display: flex;
-    flex-direction: row;
-    margin-top: 15px;
-  }
-
-  .item-select-title {
-    color: #999999;
-    font-size: 14px;
-    margin-right: 15px;
-  }
-
-  .item-select-column {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .item-select-row {
-    display: flex;
-    flex-direction: row;
-    margin-bottom: 8px;
-  }
-
-  .item-select-box {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-  }
-
-  .item-select-img {
-    width: 36px;
-  }
-
-  .item-select-box {
-    padding: 5px;
-    margin-right: 8px;
-    background-color: #f7f7f7;
-    border: 0.5px solid #ccc;
-    cursor: pointer;
-  }
-
-  .item-select-box:hover {
-    border: 0.5px solid #e3393c;
-  }
-
-  .item-select-box-active {
-    border: 0.5px solid #e3393c;
   }
 
   .item-select-img img {
@@ -376,29 +350,21 @@
     padding: 5px;
   }
 
-  .item-select-class {
-    padding: 5px;
-    margin-right: 8px;
-    background-color: #f7f7f7;
-    border: 0.5px solid #ccc;
-    cursor: pointer;
-  }
-
-  .item-select-class:hover {
-    border: 0.5px solid #e3393c;
-  }
-
   .add-buy-car-box {
     width: 100%;
-    margin-top: 70px;
     border-top: 1px dotted #ccc;
   }
 
   .add-buy-car {
     margin-top: 15px;
     position: relative;
-    left: 65%;
-    top: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    div{
+      margin-right: 8px;
+    }
   }
 
   /******************商品图片及购买详情结束******************/

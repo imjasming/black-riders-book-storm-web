@@ -70,13 +70,12 @@
   $color-primary: #409EFF;
 
   .container {
-    /*background-color: #F6F6F6;*/
+    background-color: #F6F6F6;
   }
 
   .content {
     width: 1050px;
     margin: 10px auto;
-    border: 2px solid $color-primary;
   }
 
   .seckill-icon img {
@@ -125,6 +124,8 @@
   .item-class {
     width: 100%;
     background-color: #fff;
+    margin-top: 8px;
+    border: 2px solid $color-primary;
   }
 
   .item-class-head {

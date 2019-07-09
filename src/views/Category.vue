@@ -83,7 +83,7 @@
         isAction: [true, false, false],
         icon: ['arrow-up-a', 'arrow-down-a', 'arrow-down-a'],
         goodsTool: [
-          {title: '综合', en: 'sale'},
+          {title: '综合', en: 'dealMount'},
           {title: '浏览数', en: 'lookMount'},
           {title: '价格', en: 'price'}
         ],

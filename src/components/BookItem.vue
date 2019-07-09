@@ -67,12 +67,13 @@
   .goods-show-info {
     width: 206px;
     padding: 10px;
-    margin: 15px 0px;
+    margin-top: 8px;
+    margin-left: 2px;
     border: 1px solid #fff;
   }
 
   .goods-show-info:hover {
-    border: 1px solid #ccc;
+    border: 1px solid $color-primary;
     box-shadow: 0px 0px 15px #ccc;
   }
 
