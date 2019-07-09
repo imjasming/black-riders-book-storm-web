@@ -31,7 +31,6 @@
 <script>
   import ShopHeader from '@/views/header/ShopHeader';
   import store from '@/vuex/store';
-  import {mapGetters, mapActions} from 'vuex';
   import request from '@/utils/request'
 
   export default {
@@ -44,13 +43,12 @@
       }
     },
     created() {
-      this.loadGoodsList();
+      this.loadStoreBook()
     },
     computed: {
       ...mapGetters(['orderListBy'])
     },
     methods: {
-      ...mapActions(['loadGoodsList']),
       loadStoreBook(){
         request.get(`/book/store?storeId=${this.store.storeInfo.id}`).then(response => {
           this.bookList = response.data.data.list

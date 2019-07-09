@@ -137,7 +137,8 @@
 
           shoppingCartList.forEach(item => {
             let cartItem = {}
-            cartItem.bookId = item.bookInfo.id
+            cartItem.shoppingCartId = item.bookInfo.id
+            cartItem.bookId = item.bookId
             cartItem.storeId = item.bookInfo.storeId
             cartItem.mount = item.count
             cartItem.price = item.bookInfo.price

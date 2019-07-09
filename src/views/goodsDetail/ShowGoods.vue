@@ -55,7 +55,7 @@
             <div class="item-remarks-sum">
               <p>累计评价</p>
               <p>
-                <span class="item-remarks-num">{{bookInfo.remarksNum}} 条</span>
+                <span class="item-remarks-num">{{remarks}} 条</span>
               </p>
             </div>
           </div>
@@ -88,6 +88,9 @@
     computed: {
       bookInfo() {
         return this.$store.getters.bookInfo
+      },
+      remarks() {
+        return this.$store.getters.comments.length
       },
       isLogin() {
         const token = this.$store.getters.token
@@ -137,6 +140,7 @@
           const data = response.data.data
           this.$store.dispatch('setBookInfo', data.bookInfo)
           this.$store.dispatch('setBookStore', data.store)
+          this.$store.dispatch('setBookComments', response.data.data.commentList)
           this.price = this.bookInfo.price
 
           this.$store.dispatch('setIsLoading', false)

@@ -46,53 +46,38 @@
             </TabPane>-->
             <TabPane label="商品评价">
               <div class="remarks-container">
-                <!--                <div class="remarks-title">-->
-                <!--                  <span>商品评价</span>-->
-                <!--                </div>-->
-                <!--<div class="remarks-analyse-box">
-                  <div class="remarks-analyse-goods">
-                    <i-circle :percent="goodsInfo.remarks.goodAnalyse" stroke-color="#e4393c">
-                      <span class="remarks-analyse-num">{{goodsInfo.remarks.goodAnalyse}}%</span>
-                      <p class="remarks-analyse-title">好评率</p>
-                    </i-circle>
-                  </div>
-                  <div class="remarks-analyse-tags">
-                    <Tag checkable :color="tagsColor[index % 4]" v-for="(item,index) in goodsInfo.remarks.remarksTags"
-                         :key="index">{{item}}
-                    </Tag>
-                  </div>
-                </div>-->
-                <!--<div class="remarks-bar">
-                  <span>追评({{goodsInfo.remarks.remarksNumDetail[0]}})</span>
-                  <span>好评({{goodsInfo.remarks.remarksNumDetail[1]}})</span>
-                  <span>中评({{goodsInfo.remarks.remarksNumDetail[2]}})</span>
-                  <span>差评({{goodsInfo.remarks.remarksNumDetail[3]}})</span>
-                </div>-->
                 <div class="remarks-box" v-for="(item,index) in comments" :key="index">
                   <div class="remarks-user">
                     <Avatar icon="person"/>
                     <span class="remarks-user-name">{{item.username}}</span>
                   </div>
-                  <!--<div class="remarks-content-box">
-                    <p>
+                  <div class="remarks-content-box">
+                    <!--<p>
                       <Rate disabled :value="item.values" allow-half class="remarks-star"></Rate>
-                    </p>
+                    </p>-->
                     <p class="remarks-content">{{item.content}}</p>
                     <p class="remarks-sub">
-                      <span class="remarks-item">{{item.goods}}</span>
+                      <!--<span class="remarks-item">{{item.goods}}</span>-->
                       <span class="remarks-time">{{item.date}}</span>
                     </p>
-                  </div>-->
+                  </div>
                 </div>
                 <div class="remarks-page">
-                  <Page :total="40" size="small" show-elevator show-sizer></Page>
+                  <Page :total="1" size="small" show-elevator show-sizer></Page>
                 </div>
               </div>
             </TabPane>
             <TabPane label="撰写评价" name="name1">
-              <Input type="textarea" :rows="7" size="large" v-model="commentForm" placeholder="Enter something..."
-                     style="width: 100%"/>
-              <Button type="info">提 交</Button>
+              <Form ref="commontForm" :model="commentForm" :rules="commentRules">
+                <FormItem prop="content">
+                  <Input type="textarea" :rows="7" size="large" v-model="commentForm.content"
+                         placeholder="Enter something..."
+                         style="width: 100%"/>
+                </FormItem>
+                <FormItem>
+                  <Button type="primary" @click.native.prevent="handlePostComment">提 交</Button>
+                </FormItem>
+              </Form>
             </TabPane>
           </Tabs>
         </div>
@@ -110,7 +95,17 @@
     data() {
       return {
         tagsColor: ['blue', 'green', 'red', 'yellow'],
-        commentForm: '',
+        commentRules: {
+          content: [
+            {required: true, trigger: 'blur'}
+          ]
+        },
+        commentForm: {
+          bookId: this.$store.getters.bookId,
+          userId: this.$store.getters.userInfo.id,
+          username: this.$store.getters.username,
+          content: ''
+        },
       };
     },
     computed: {
@@ -129,6 +124,19 @@
         const bookId = this.$store.getters.bookId
         request.get(`/comment/book?id=${bookId}`).then(response => {
           this.$store.dispatch('setBookComments', response.data.data)
+        }).catch(error => {
+          this.$Message.error({
+            content: `拉取评论失败：${error}`
+          })
+        })
+      },
+      handlePostComment() {
+        request.post('/comment/book', this.commentForm).then(response => {
+          this.$store.dispatch('setBookComments', response.data.data)
+        }).catch(error => {
+          this.$Message.error({
+            content: `发布评论失败：${error}`
+          })
         })
       },
       changeHeight() {
@@ -170,64 +178,8 @@
     background-color: #fff;
   }
 
-  .item-intro-recommend {
-    width: 200px;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .item-intro-recommend-column {
-    display: flex;
-    flex-direction: column;
-    box-shadow: 0px 0px 5px #999;
-  }
-
-  .item-recommend-title {
-    width: 100%;
-    height: 38px;
-    font-size: 16px;
-    line-height: 38px;
-    color: #fff;
-    background-color: #E4393C;
-    box-shadow: 0px 0px 5px #E4393C;
-    text-align: center;
-  }
-
-  .item-recommend-column {
-    margin-top: 15px;
-  }
-
-  .item-recommend-intro {
-    padding: 5px 15px;
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    font-size: 12px;
-    color: #999;
-    cursor: pointer;
-  }
-
-  .item-recommend-img {
-    width: 80%;
-    margin: 0px auto;
-    cursor: pointer;
-  }
-
   .item-recommend-img img {
     width: 100%;
-  }
-
-  .item-recommend-top-num {
-    color: #fff;
-    margin: 0px 2px;
-    padding: 1px 5px;
-    border-radius: 12px;
-    background-color: #E4393C;
-  }
-
-  .item-recommend-price {
-    color: #E4393C;
-    font-weight: bolder;
   }
 
   .item-intro-detail {
@@ -259,10 +211,6 @@
   .item-intro-nav li:first-child {
     background-color: #E4393C;
     color: #fff;
-  }
-
-  .item-intro-img {
-    width: 100%;
   }
 
   .item-intro-img img {
@@ -340,7 +288,7 @@
   .remarks-box {
     padding: 15px;
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     border-bottom: 1px #ccc dotted;
     border-top: 1px #ccc dotted;
   }
@@ -355,6 +303,7 @@
 
   .remarks-content-box {
     width: calc(100% - 180px);
+    padding-left: 15px;
   }
 
   .remarks-star {
@@ -372,9 +321,9 @@
     color: #ccc;
   }
 
-  .remarks-time {
+/*  .remarks-time {
     margin-left: 15px;
-  }
+  }*/
 
   .remarks-page {
     margin: 15px;

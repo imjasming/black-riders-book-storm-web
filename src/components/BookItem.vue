@@ -1,29 +1,29 @@
 <template>
   <div class="goods-show-info">
     <div class="goods-show-img">
-      <router-link :to="'/book?id=' + item.id"><img :src="item.imageUrl"/></router-link>
+      <router-link :to="'/book?id=' + product.id"><img :src="product.imageUrl"/></router-link>
     </div>
     <div class="goods-show-price">
-      <router-link :to="'/book?id=' + item.id">
+      <router-link :to="'/book?id=' + product.id">
                   <span>
                     <Icon type="social-yen text-danger"></Icon>
-                    <span class="seckill-price text-danger">{{item.price}}</span>
+                    <span class="seckill-price text-danger">{{product.price}}</span>
                   </span>
       </router-link>
     </div>
     <div class="goods-show-detail">
-      <router-link :to="'/book?id=' + item.id">
-        <span>{{item.name}}</span>
+      <router-link :to="'/book?id=' + product.id">
+        <span>{{product.name}}</span>
       </router-link>
     </div>
     <div class="goods-show-num">
-      <router-link :to="'/book?id=' + item.id">
-        已有<span>{{item.remarks}}</span>人评价
+      <router-link :to="'/book?id=' + product.id">
+        已有<span>{{remarks}}</span>人评价
       </router-link>
     </div>
     <div class="goods-show-seller">
-      <router-link :to="'/book?id=' + item.id">
-        <span>{{item.press}}</span>
+      <router-link :to="'/book?id=' + product.id">
+        <span>{{product.press}}</span>
       </router-link>
     </div>
   </div>
@@ -37,7 +37,15 @@
     },
     data() {
       return {
-        item: this.product
+        //product: this.product
+      }
+    },
+    computed: {
+      remarks() {
+        if (this.product.commentList) {
+          return this.product.commentList.length
+        }
+        return 0
       }
     }
   }
@@ -76,8 +84,8 @@
     align-items: center;
     justify-content: center;
 
-      img {
-        width: 100%;
+    img {
+      width: 100%;
     }
   }
 

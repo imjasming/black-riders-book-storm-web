@@ -54,7 +54,7 @@
             <book-item v-for="(item, index) in orderGoodsList" :product="item" :key="index"></book-item>
           </div>
           <div class="goods-page">
-            <Page :total="100" show-sizer></Page>
+            <Page :total="totalNum" show-sizer></Page>
           </div>
         </div>
       </div>
@@ -84,11 +84,14 @@
         icon: ['arrow-up-a', 'arrow-down-a', 'arrow-down-a'],
         goodsTool: [
           {title: '综合', en: 'sale'},
-          {title: '评论数', en: 'remarks'},
+          {title: '浏览数', en: 'lookMount'},
           {title: '价格', en: 'price'}
         ],
         isLoading: true,
         sortOrderBy: 'sale',
+        pageSize: 0,
+        pageNum: 0,
+        totalNum: 0,
         inverseOrder: false,
         currentSortIndex: 0,
       };
@@ -122,6 +125,9 @@
         request.get(`/index/items?name="${this.searchItem}"`).then(response => {
           const data = response.data.data
           this.$store.dispatch('setBookList', data)
+          this.pageSize = data.pageSize
+          this.pageNum = data.pageNum
+          this.totalNum = data.total
           this.isLoading = false
         }).catch(error => {
           this.isLoading = false
