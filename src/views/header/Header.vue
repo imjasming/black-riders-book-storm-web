@@ -15,7 +15,8 @@
         </router-link>
       </div>
       <Form ref="searchForm" :model="searchForm" inline >
-        <Input type="text" v-model="searchForm.query" placeholder="想找什么书，快搜搜看" size="large" icon="ios-search" style="width: 400px"></Input>
+        <Input id="searchInput" type="text" v-model="searchForm.query" placeholder="想找什么书，快搜搜看" size="large" style="width: 400px"></Input>
+        <Button shape="circle" icon="ios-search" @click.native.prevent="handleSearch">搜索</Button>
       </Form>
       <div>
         <Dropdown v-if="isLogin">
@@ -94,6 +95,9 @@
     },
 
     methods: {
+      handleSearch(){
+        this.$router.push(`/search?query=${this.searchForm.query}`)
+      },
       setHeader() {
         const top = document.body.scrollTop || document.documentElement.scrollTop || window.pageXOffset;
         if (top > 40) {
@@ -109,6 +113,11 @@
 <style lang="scss" scoped>
   $color-primary: #409EFF;
 
+  #searchInput{
+    input{
+      border-radius: 50%;
+    }
+  }
   .logo-right{
     color: $color-primary
   }

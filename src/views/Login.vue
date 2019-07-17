@@ -2,9 +2,6 @@
   <!-- 登录页面 -->
   <div>
     <Row class="container">
-<!--      <i-col span="13" offset="2" class="login-img-box">
-        <img src="static/img/sale.jpg" alt="">
-      </i-col>-->
         <i-col span="7" class="login-box" >
         <div class="login-container">
           <div class="login-header">
@@ -45,8 +42,8 @@
     data() {
       return {
         loginForm: {
-          username: '',
-          password: ''
+          username: '123456',
+          password: '123456'
         },
         loginRule: {
           username: [
@@ -66,10 +63,12 @@
             this.$store.dispatch('login', this.loginForm).then(result => {
               if (result.code === 200) {
                 this.$Message.success('登录成功');
-                this.$router.push('/');
+                this.$router.back()
               } else {
                 this.$Message.error('用户名或密码错误');
               }
+            }).catch(error => {
+              this.$Message.error('用户名或密码错误');
             });
           } else {
             this.$Message.error('请填写正确的用户名或密码');
@@ -115,7 +114,7 @@
 
   .login-container {
     width: 80%;
-    border: #3CA9C4 solid 2px;
+    border: $color-primary solid 2px;
     background: #ffffff;
   }
 
@@ -126,7 +125,7 @@
     line-height: 50px;
     letter-spacing: 5px;
     color: #fff;
-    background-color:#3CA9C4;
+    background-color:$color-primary;
   }
 
   .form-box {

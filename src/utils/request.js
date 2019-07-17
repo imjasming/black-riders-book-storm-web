@@ -3,7 +3,7 @@ import store from '../store'
 import {getToken} from '@/utils/auth'
 import Message from 'iview'
 
-export const serverUrl = 'http://172.30.85.205:8080'
+export const serverUrl = 'http://172.30.64.24:8080'
 
 /*request.default.timeout = 16000
 axios.defaults.headers.post['Content-Type'] = 'application/json'

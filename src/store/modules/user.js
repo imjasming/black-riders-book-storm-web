@@ -124,6 +124,9 @@ const user = {
           }
         }).then(response => {
           const data = response.data.data
+          if (!data.token) {
+            reject()
+          }
           const token = `${data.tokenHead} ${data.token}`
           commit('SET_TOKEN', token)
           commit('SET_USERNAME', username)

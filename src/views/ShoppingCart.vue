@@ -23,7 +23,7 @@
         <div class="car-btn-group">
           <div></div>
           <div class="car-btn-row">
-            <router-link to="/goodsDetail">
+            <router-link :to="'/book' + newShoppingCart.book.id">
               <button class="btn-car btn-car-to-detail">查看商品详情</button>
             </router-link>
             <router-link to="/order">
@@ -37,30 +37,8 @@
       <div class="other-user-buy-title">
         <p>可以顺便看下其他商品哦 ~</p>
       </div>
-      <div class="other-user-buy-row" v-for="(items,index1) in recommend" :key="index1">
-        <div class="other-user-buy-item-box" v-for="(item,index2) in items" :key="index2">
-          <div class="other-user-buy-item-img">
-            <a href="item_detail.html"><img :src="item.img" alt=""></a>
-          </div>
-          <div class="other-buy-detail-box">
-            <div class="other-buy-title">
-              <a href="item_detail.html">
-                <p>{{item.intro}}</p>
-              </a>
-            </div>
-            <div class="other-buy-price">
-              <p>￥{{item.price}}</p>
-            </div>
-            <div class="other-buy-btn-box">
-              <router-link to="/goodsDetail">
-                <button class="other-buy-btn">
-                  <Icon type="ios-cart"></Icon>
-                  加入购物车
-                </button>
-              </router-link>
-            </div>
-          </div>
-        </div>
+      <div class="other-user-buy-row" >
+        <book-item :product="item" v-for="(item,index1) in recommend" :key="index1"></book-item>
       </div>
     </div>
   </div>
@@ -69,8 +47,8 @@
 <script>
   import Search from '@/views/Search';
   import GoodsListNav from '@/views/nav/GoodsListNav';
-  //import store from '@/vuex/store';
-  //import {mapState, mapActions} from 'vuex';
+  import request from '@/utils/request'
+  import BookItem from '@/components/BookItem'
 
   export default {
     name: 'ShoppingCart',
@@ -78,27 +56,40 @@
       window.scrollTo(0, 0);
       next();
     },
+    data() {
+      return {
+        recommend: [],
+      }
+    },
     created() {
-      this.loadRecommend();
+      this.getRecommend()
     },
     computed: {
-      newShoppingCart(){
+      newShoppingCart() {
         return this.$store.getters.newShoppingItem
       },
-      //...mapState(['recommend'])
+
     },
     methods: {
-      //...mapActions(['loadRecommend'])
+      getRecommend() {
+        request.get('/index/recommend').then(response => {
+          this.recommend = response.data.data.list
+        }).catch(error => {
+          this.$Message.error(error)
+        })
+      }
     },
     components: {
       Search,
-      GoodsListNav
+      GoodsListNav,
+      BookItem
     },
     //store
   };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import "../style/index";
   /****************************加入购物车页面开始*****************************/
   .add-info-box-container {
     width: 100%;
@@ -168,23 +159,23 @@
 
   .btn-car-to-detail {
     background-color: #fff;
-    color: #e4393c;
+    color: $color-primary;
     border: 1px solid #fff;
   }
 
   .btn-car-to-detail:hover {
-    border: 1px solid #e4393c;
+    border: 1px solid $color-primary;
   }
 
   .btn-car-to-pay {
-    background-color: #e4393c;
+    background-color: $color-primary;
     color: #fff;
-    border: 1px solid #e4393c;
+    border: 1px solid $color-primary;
   }
 
   .btn-car-to-pay:hover {
-    background-color: #c91623;
-    border: 1px solid #c91623;
+    background-color: $color-primary;
+    border: 1px solid $color-primary;
   }
 
   /*其他用户购买*/
@@ -206,7 +197,9 @@
     margin-top: 25px;
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-start;
   }
 
   .other-user-buy-item-box {
@@ -242,7 +235,7 @@
   .other-buy-price {
     font-size: 12px;
     font-weight: bold;
-    color: #E4393C;
+    color: $color-primary;
   }
 
   .other-buy-btn {

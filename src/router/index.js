@@ -26,13 +26,18 @@ const MyShoppingCart = resolve => require(['@/views/home/MyShoppingCart'], resol
 const Info = resolve => require(['@/views/home/UserInfo'], resolve);
 const Merchant = resolve => require(['@/views/Merchant'], resolve);
 const Logout = resolve => require(['@/views/Logout'], resolve);
-const Layout = resolve => require(['@/components/Layout'], resolve);
+const Search = resolve => require(['@/views/SearchPage'], resolve);
 
 Vue.use(VueRouter)
 
 const router = new VueRouter({
   mode: 'history',
   routes: [
+    {
+      path: '/search',
+      name: 'Search',
+      component: Search
+    },
     {
       path: '/', // 首页
       name: 'Index',
@@ -155,7 +160,7 @@ const router = new VueRouter({
   ]
 })
 
-const whiteList = ['/', '/Index', '/category', '/book', '/Login', '/login', '/SignUp', '/SignUp/checkPhone', '/SignUp/inputInfo', '/SignUp/signUpDone', '/freeback',]
+const whiteList = ['/', '/Index', '/category', '/book', '/Login', '/login', '/SignUp', '/SignUp/checkPhone', '/SignUp/inputInfo', '/SignUp/signUpDone', '/freeback','/merchant',]
 router.beforeEach((to, from, next) => {
   // authorized, permit all
   if (getToken()) {

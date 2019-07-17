@@ -1,17 +1,8 @@
 <template>
   <div>
     <Row class="container">
-<!--      <i-col span="12" offset="2" class="signup-img-box">
-        <img src="static/img/signup-sale.png" alt="">
-      </i-col>-->
       <i-col span="8" class="box">
-<!--        <div class="sign-up-title">-->
-<!--          <h1 align="center" >欢迎注册账号</h1>-->
-<!--        </div>-->
         <div class="sign-up-step-box">
-<!--          <div class="sign-up-title">-->
-<!--            <h1 align="center" >欢迎注册账号</h1>-->
-<!--          </div>-->
           <div class="signup-header">
             <p>欢迎注册账号</p>
           </div>
@@ -52,8 +43,8 @@
   };
 </script>
 
-<style scoped>
-
+<style lang="scss" scoped>
+@import "../style/index.scss";
 
   .container {
 /*    margin: 15px auto;*/
@@ -82,7 +73,7 @@
     margin: 20px auto;
     width: 400px;
     height: 440px;
-    border: 2px solid #2db7f5;
+    border: 2px solid $color-primary;
     background-color: #ffffff;
     position: relative;
     left: 200%;
@@ -103,7 +94,7 @@
     line-height: 50px;
     letter-spacing: 5px;
     color: #fff;
-    background-color:#2db7f5;
+    background-color:$color-primary;
   }
 
   .sign-up-box {

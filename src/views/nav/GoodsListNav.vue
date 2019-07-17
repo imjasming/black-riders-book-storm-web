@@ -17,11 +17,13 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import "../../style/index";
+
 .search-nav{
   width: 100%;
   height: 64px;
-  border-bottom: 2px solid #B1191A;
+  border-bottom: 2px solid $color-primary;
 }
 .search-nav-container{
   width: 80%;
@@ -41,18 +43,18 @@ export default {
   cursor: pointer;
   margin-left: 30px;
   line-height: 64px;
-  color: #C81623;
+  color: $color-primary;
   font-size: 18px;
   /*font-weight: bold;*/
   float: left;
 }
 .search-nav-container a{
-  color: #C81623;
+  color: $color-primary;
   text-decoration: none;
 }
 .search-nav-container li:first-child{
   padding: 0px 38px;
-  background:#B1191A;
+  background:$color-primary;
   margin: 0px;
   color: #fff;
 }

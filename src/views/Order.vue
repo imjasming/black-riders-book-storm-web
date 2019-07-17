@@ -1,6 +1,6 @@
 <template>
   <div>
-    <Search></Search>
+    <!--<Search></Search>-->
     <GoodsListNav></GoodsListNav>
     <div class="goods-list-container">
       <Alert show-icon class="tips-box">
@@ -29,9 +29,9 @@
                   <Radio :label="item.id" v-for="(item, index) in address" :key="index">
                     <span>{{item.name}} {{item.province}} {{item.city}} {{item.address}} {{item.phone}} {{item.zipCode ? item.zipCode : ''}}</span>
                   </Radio>
-                  <span>
+                  <span v-if="address.length === 0">
                     您还没有添加地址，
-                  <router-link to="/home/addAddress" v-if="address.length === 0">点击此处添加地址</router-link></span>
+                  <router-link to="/home/addAddress">点击此处添加地址</router-link></span>
                 </RadioGroup>
               </p>
             </Panel>
@@ -51,9 +51,7 @@
           <p><span>提交订单应付总额：</span> <span class="money"><Icon type="social-yen"></Icon> {{totalPrice.toFixed(2)}}</span>
           </p>
           <div class="pay-btn">
-            <!--<router-link to="/pay">-->
             <Button @click="handlePostOrder" type="error" size="large" :disabled="infoCompleted">支付订单</Button>
-            <!--</router-link>-->
           </div>
         </div>
       </div>
@@ -212,7 +210,9 @@
   };
 </script>
 
-<style scoped>
+<style lang="scss" scoped>
+  @import "../style/index";
+
   .goods-list-container {
     margin: 15px auto;
     width: 80%;
@@ -254,7 +254,7 @@
     line-height: 36px;
     text-align: center;
     color: #fff;
-    background-color: #f90013;
+    background-color: $color-primary;
   }
 
   .address-detail {

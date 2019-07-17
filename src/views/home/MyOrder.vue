@@ -63,6 +63,10 @@
         ],
         orderPanel: [
           {
+            title: '',
+            orders: []
+          },
+          {
             title: '未支付',
             orders: []
           },

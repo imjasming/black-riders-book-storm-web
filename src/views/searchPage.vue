@@ -88,7 +88,7 @@
           {title: '价格', en: 'price'}
         ],
         isLoading: true,
-        sortOrderBy: 'sale',
+        sortOrderBy: 'dealMount',
         pageSize: 0,
         pageNum: 0,
         totalNum: 0,
@@ -120,9 +120,9 @@
     methods: {
       initGoodsList() {
         this.isLoading = true
-        this.searchItem = this.$route.query.name;
+        this.searchItem = this.$route.query.query;
 
-        request.get(`/index/items?name="${this.searchItem}"`).then(response => {
+        request.get(`/index/search?query=${this.searchItem}`).then(response => {
           const data = response.data.data
           this.$store.dispatch('setBookList', data)
           this.pageSize = data.pageSize

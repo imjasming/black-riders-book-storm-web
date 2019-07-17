@@ -99,19 +99,31 @@
     },
     methods: {
       handleUpdateUserInfo() {
-        const userInfo = this.$store.getters.userInfo.id
-        request.post(
-          {
-            url: `/info/${userInfo}`,
-            data: this.infoForm
+        this.$refs.infoForm.validate((valid => {
+          if (valid) {
+            const userId = this.$store.getters.userInfo.id
+            const url = `/user/info/update/${userId}`
+            request(
+              {
+                url: url,
+                data: this.infoForm,
+                method: 'post'
+              }
+            ).then(response => {
+              this.$store.dispatch('setUserInfo', response.data.data)
+              this.$Message.success({
+                content: '更新成功'
+              })
+            }).catch(error => {
+              this.$Message.error({
+                content: `更新失败：${error}`
+              })
+            })
+          } else {
+            this.$Message.error('请填写正确的用户信息');
           }
-        ).then(response => {
-          this.$store.dispatch('setUserInfo', response.data.data)
-        }).catch(error => {
-          this.$Message.error({
-            content: `更新失败：${error}`
-          })
-        })
+        }))
+
       }
     }
   }

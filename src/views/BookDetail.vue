@@ -1,8 +1,8 @@
 <template>
   <div>
     <ShopHeader></ShopHeader>
-    <GoodsDetailNav></GoodsDetailNav>
-    <div class="shop-item-path">
+    <!--<GoodsDetailNav></GoodsDetailNav>-->
+    <!--<div class="shop-item-path">
       <div class="shop-nav-container">
         <Breadcrumb>
           <BreadcrumbItem to="/">首页</BreadcrumbItem>
@@ -10,7 +10,7 @@
           <BreadcrumbItem>手机保护套</BreadcrumbItem>
         </Breadcrumb>
       </div>
-    </div>
+    </div>-->
     <!-- 商品信息展示 -->
     <ShowGoods></ShowGoods>
     <!-- 商品详细展示 -->
